@@ -2,6 +2,7 @@ package com.android.widgetplaceholder;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,10 +25,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.logD("MainActivity", "onCreate 1");
+        Log.logD("MainActivity", "onCreate");
         setContentView(R.layout.activity_main);
         initWidget();
-        Log.logD("MainActivity", "onCreate 2");
     }
 
     @Override
@@ -47,11 +47,19 @@ public class MainActivity extends Activity {
     }
 
     public void viewInvisible(View view) {
-        phvView.setVisibility(View.INVISIBLE);
+        Log.logD("MainActivity", "count = " + count);
+        phvView.setVisibility(count % 2 == 0 ? View.INVISIBLE : View.VISIBLE);
+        count++;
     }
 
     public void viewGone(View view) {
+        Log.logD("MainActivity", "count = " + count);
         phvView.setVisibility(count % 2 == 0 ? View.GONE : View.VISIBLE);
         count++;
+    }
+
+    public void goOtherActivity(View view) {
+        Intent intent = new Intent(MainActivity.this, OtherActivity.class);
+        startActivity(intent);
     }
 }

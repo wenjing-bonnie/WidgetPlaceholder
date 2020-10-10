@@ -44,11 +44,18 @@
         android:onClick="viewGone"
         android:text="match parent button" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goOtherActivity"
+        android:text="go to other activity"/>
+
     <com.android.widgetplaceholder.PlaceHolderView
         android:id="@+id/phv_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light" />
+        android:background="@android:color/holo_blue_light"
+        android:visibility="gone" />
 
 
 </LinearLayout>
