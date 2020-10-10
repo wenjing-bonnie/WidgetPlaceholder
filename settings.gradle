@@ -1,0 +1,3 @@
+include ':libs:WidgetPlaceholderlibrary'
+include ':app'
+rootProject.name = "WidgetPlaceholder"
