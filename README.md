@@ -34,3 +34,8 @@
 （1）从生命周期方法的调用过程中，可以看到，`onVisibilityChanged`会在View的状态发生变化的时候就会被调用到，例如主动调用`setVisible` ,Activity的生命周期`onPause`、`onResume`被调用的时候，都会触发`onVisibilityChanged`。
 
 （2）另外当View的可见状态的变化，也会触发不同的周期方法：状态由InVisible变成Visible，该控件只需要执行`onDraw`即可，因为该控件在Window上是有占位的，在初始化加载该控件的时候，已经将该控件放置到Window上(即执行完`onLayout`);相反的如果有Gone变为Visible，该控件需要依次进行重新测量、布局和绘制(即依次执行完`onMeasure`->`onLayout`->`onDraw`)，因为在初始化该控件的时候，并没有将该控件绘制到Window上。
+## 三 自定义View
+### 1.自定义View的方法
+   我们在项目中使用自定义View的方法通常有以下几种方式：
+  - 组合控件
+
