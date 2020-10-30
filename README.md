@@ -49,3 +49,6 @@
   - 继承ViewGroup
  
  也是通过ViewGroup的生命周期函数来完成View的渲染，相对于继承View差别在于ViewGroup就是一些View的集合，而继承View就是单个View，在这两个里面添加View的时候，坐标系会有不同。另外在添加View的时候，需要的生命周期函数也有不同。
+### 2.继承View和ViewGroup的差异
+我们其实都可以往View和ViewGroup中在添加View，为了方便描述后面的内容，假设现在需要实现一个九宫格的功能，我们就动态的往View/ViewGroup中添加ImageView。
+  1. 坐标系的不同
