@@ -59,7 +59,15 @@ public class MainActivity extends Activity {
     }
 
     public void goOtherActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, OtherActivity.class);
+        startActivity(OtherActivity.class);
+    }
+
+    public void goExtendsView(View view) {
+        startActivity(PhotoSelectorViewTestActivity.class);
+    }
+
+    private void startActivity(Class<?> targetClass) {
+        Intent intent = new Intent(MainActivity.this, PhotoSelectorViewTestActivity.class);
         startActivity(intent);
     }
 }
