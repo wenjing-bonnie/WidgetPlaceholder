@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PhotoSelectorView">
+        <attr name="verticalSpacing" format="dimension" />
+        <attr name="horizontalSpacing" format="dimension" />
+        <attr name="maxNumber" format="integer" />
+        <attr name="numColumns" format="integer" />
+        <attr name="defaultDrawableReference" format="reference" />
+        <!--默认设置图片的大小-->
+        <attr name="columnWidth" format="dimension" />
+
+    </declare-styleable>
+</resources>
