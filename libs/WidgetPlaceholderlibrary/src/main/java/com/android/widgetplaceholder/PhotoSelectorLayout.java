@@ -3,7 +3,6 @@ package com.android.widgetplaceholder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -23,8 +22,8 @@ import java.util.List;
  *
  * @author wenjing.liu
  */
-public class PhotoSelectorView extends View {
-    private final String TAG = "PhotoSelectorView";
+public class PhotoSelectorLayout extends ViewGroup {
+    private final String TAG = "PhotoSelectorLayout";
     private boolean DEBUG = true;
     private Context context;
 
@@ -66,7 +65,7 @@ public class PhotoSelectorView extends View {
     private int maxNumber;
 
 
-    public PhotoSelectorView(Context context) {
+    public PhotoSelectorLayout(Context context) {
         this(context, null);
 
     }
@@ -77,7 +76,7 @@ public class PhotoSelectorView extends View {
      * @param context
      * @param attrs
      */
-    public PhotoSelectorView(Context context, AttributeSet attrs) {
+    public PhotoSelectorLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         selectorPathList = new ArrayList<>();
@@ -203,6 +202,7 @@ public class PhotoSelectorView extends View {
         updateAllAddChildView();
     }
 
+
     /**
      * 获取的是ViewGroup的width和height，所以该控件的height不起作用，width会影响到每个column的宽度
      *
@@ -289,7 +289,6 @@ public class PhotoSelectorView extends View {
         if (DEBUG) {
             Log.v(TAG, String.format(" onLayout 初始化的位置 left = %d , top = %d , right = %d, bottom = %d ", l, t, r, b));
         }
-        int firstItemPaddingLeft, firstItemPaddingTop = 0;
         //每行
         for (int row = 0; row < mNumRow; row++) {
             //每列
@@ -304,8 +303,8 @@ public class PhotoSelectorView extends View {
                 ImageView child = item.imageView;
                 item.updateImageView();
                 //更新位置
-                left = l + mColumnWidth * col + mHorizontalSpacing * col;
-                top = t + mColumnWidth * row + mVerticalSpacing * row;
+                left = paddingLeft + mColumnWidth * col + mHorizontalSpacing * col;
+                top = paddingTop + mColumnWidth * row + mVerticalSpacing * row;
                 right = left + mColumnWidth;
                 bottom = top + mColumnWidth;
 
@@ -313,73 +312,11 @@ public class PhotoSelectorView extends View {
                     Log.d(TAG, String.format(" onLayout 第%d行第%d列 left = %d , top = %d , right = %d, bottom = %d ", row, col, left, top, right, bottom));
                 }
                 child.layout(left, top, right, bottom);
+                addView(child);
             }
         }
     }
 
-    /**
-     * 将View绘制到画布上
-     * <p>
-     * <p>
-     * dispatchDraw(Canvas canvas)：ViewGroup及其派生类具有的方法，主要用于控制子View的绘制分发。
-     * 自定义控件时，重载该方法可以改变子View的绘制，进而实现一些复杂的视效。
-     * .drawChild(Canvas canvas, View child, long drawingTime)：ViewGroup及其派生类具有的方法，用于直接绘制具体的子View。
-     * 自定义控件时，重载该方法可以直接绘制具体的子View。
-     *
-     * @param canvas
-     */
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (DEBUG) {
-            Log.v(TAG, String.format(" onDraw child size  = %d ", childViewList.size()));
-        }
-        if (childViewList.size() == 0) {
-            return;
-        }
-        //继承于View，要通过移动坐标系，将每个ImageView给画出来
-
-        //每行
-        int transX = 0;
-        int transY = 0;
-        for (int row = 0; row < mNumRow; row++) {
-            if (row != 0) {
-                //将画布移动到最左边,并且往下移动一行,因为坐标系已经移动到第(mNumColumns-1)列了
-                transX = -(mColumnWidth + mHorizontalSpacing) * (mNumColumns - 1) - paddingLeft;
-                transY = mColumnWidth + mVerticalSpacing;
-                if (DEBUG) {
-                    Log.v(TAG, String.format(" onDraw 第%d行%d列 transX = %d , transY = %d ", row, 0, transX, transY));
-                }
-                canvas.translate(transX, transY);
-            }
-            //每列
-            for (int col = 0; col < mNumColumns; col++) {
-
-                int index = row * mNumColumns + col;
-                if (index >= childViewList.size()) {
-                    break;
-                }
-                PhotoSelectorItem item = childViewList.get(index);
-                ImageView child = item.imageView;
-                //要将画布移动下，才可以画另外一个,移动的是坐标，画布的位置并没有变
-                //位移都是基于当前位置移动，而不是(0,0)
-                transX = col > 0 ? (mColumnWidth + mHorizontalSpacing) : paddingLeft;
-                transY = (col == 0 && row == 0) ? paddingTop : 0;
-                canvas.translate(transX, transY);
-
-                if (DEBUG) {
-                    Log.v(TAG, String.format(" onDraw 第%d行%d列 transX = %d , transY = %d ", row, 0, transX, transY));
-                }
-                child.draw(canvas);
-
-                //保存Canvas状态
-                canvas.save();
-            }
-
-        }
-        // 返回最新的save状态
-        canvas.restore();
-    }
 
     /**
      * 获取所有新增的View的个数:
@@ -411,6 +348,7 @@ public class PhotoSelectorView extends View {
         }
         //直接将所有的已经存在的ImageView移除，重新添加。因为有的的时候从查看大图中删除了之后，在返回的时候不知道删除的是哪个View
         childViewList.clear();
+        removeAllViews();
         if (DEBUG) {
             Log.d(TAG, "childSize = " + childSize);
         }

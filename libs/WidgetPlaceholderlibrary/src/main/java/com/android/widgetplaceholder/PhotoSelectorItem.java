@@ -44,6 +44,6 @@ public class PhotoSelectorItem {
     }
 
     private void parsePathFromUri(final Uri uri) {
-
+        imageView.setImageResource(R.drawable.icon_camera);
     }
 }
