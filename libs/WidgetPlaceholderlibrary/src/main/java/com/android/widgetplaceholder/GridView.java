@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import java.util.List;
  */
 public class GridView extends View {
     private final String TAG = "GridView";
+    private OnItemClickListener itemClickListener;
     private boolean DEBUG = true;
     private Context context;
     /**
@@ -63,6 +65,13 @@ public class GridView extends View {
 
     private List<PhotoSelectorItem> childGroup;
 
+    /**
+     * 每个Item的点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClick(PhotoSelectorItem item);
+    }
+
     public GridView(Context context) {
         this(context, null);
     }
@@ -100,6 +109,11 @@ public class GridView extends View {
         array.recycle();
     }
 
+    /**
+     * 更新显示的个数
+     *
+     * @param count
+     */
     public void notifyDataSetChanged(int count) {
         if (mNumColumns <= 0) {
             throw new IllegalArgumentException("You must set number of column");
@@ -112,6 +126,15 @@ public class GridView extends View {
         setAllChildView();
         //刷新UI
         requestLayout();
+    }
+
+    /**
+     * 设置点击事件
+     *
+     * @param listener
+     */
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     /**
@@ -291,6 +314,56 @@ public class GridView extends View {
         }
         canvas.restore();
 
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                int index = touchWhichItem(event);
+                if (DEBUG) {
+                    Log.e(TAG, String.format("onTouchEvent 第%d个", index));
+                }
+                if (index < 0 || index > childGroup.size() || itemClickListener == null) {
+                    return super.onTouchEvent(event);
+                }
+                itemClickListener.onItemClick(childGroup.get(index));
+                break;
+            default:
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+
+    private int touchWhichItem(MotionEvent event) {
+        //获取的该点击坐标系是以该View的坐标系，是相对于View的位置
+        float eventX = event.getX();
+        float eventY = event.getY();
+        int left, top, right, bottom;
+        int index = 0;
+        if (DEBUG) {
+            Log.w(TAG, String.format("touchWhichItem  x =%f , y = %f", eventX, eventY));
+        }
+        for (PhotoSelectorItem item : childGroup) {
+            ImageView image = item.imageView;
+            //返回的是该imageView在View中的坐标位置
+            left = image.getLeft();
+            top = image.getTop();
+            right = image.getRight();
+            bottom = image.getBottom();
+            //event返回的是该点在View的坐标系中的位置
+            if (DEBUG) {
+                Log.v(TAG, String.format("touchWhichItem  left =%d , top = %d, right = %d, bottom = %d", left, top, right, bottom));
+            }
+            //所以这个是可以直接进行比较
+            if (eventX >= left && eventX <= right && eventY <= bottom && eventY >= top) {
+                return index;
+            }
+            index++;
+        }
+        return -1;
     }
 
     private void setAllChildView() {

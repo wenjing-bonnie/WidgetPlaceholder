@@ -1,12 +1,7 @@
 package com.android.widgetplaceholder;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -16,6 +11,7 @@ import java.util.List;
  */
 public class PhotoSelectorViewTestActivity extends Activity {
     private GridView gridView;
+    private GridLayout gridLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +20,8 @@ public class PhotoSelectorViewTestActivity extends Activity {
         setContentView(R.layout.activity_photo_selector_view);
         gridView = findViewById(R.id.gv_test);
         gridView.notifyDataSetChanged(7);
+
+        gridLayout = findViewById(R.id.gv_layout);
+        gridLayout.notifyDataSetChanged(7);
     }
 }

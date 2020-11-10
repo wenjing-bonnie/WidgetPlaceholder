@@ -14,4 +14,13 @@
         psv:numColumns="4"
         psv:verticalSpacing="50px" />
 
+    <com.android.widgetplaceholder.GridLayout
+        android:id="@+id/gv_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="50px"
+        psv:horizontalSpacing="50px"
+        psv:numColumns="4"
+        psv:verticalSpacing="50px" />
+
 </LinearLayout>

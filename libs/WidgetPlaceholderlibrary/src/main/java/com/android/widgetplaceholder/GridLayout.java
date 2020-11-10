@@ -99,7 +99,11 @@ public class GridLayout extends ViewGroup {
         }
         array.recycle();
     }
-
+    /**
+     * 更新显示的个数
+     *
+     * @param count
+     */
     public void notifyDataSetChanged(int count) {
         if (mNumColumns <= 0) {
             throw new IllegalArgumentException("You must set number of column");
@@ -250,6 +254,7 @@ public class GridLayout extends ViewGroup {
                     Log.d(TAG, String.format("onLayout row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, leftItem, topItem, rightItem, bottomItem));
                 }
                 child.layout(leftItem, topItem, rightItem, bottomItem);
+                addView(child);
             }
         }
     }
