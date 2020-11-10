@@ -310,11 +310,8 @@ public class GridView extends View {
                     //平移的是相对于自身的位置
                     canvas.translate((mColumnWidth + mHorizontalSpacing), 0);
                 }
-                canvas.save();
             }
         }
-        canvas.restore();
-
     }
 
 

@@ -12,6 +12,8 @@ import android.os.Bundle;
 public class PhotoSelectorViewTestActivity extends Activity {
     private GridView gridView;
     private GridLayout gridLayout;
+    private GridView gridView1;
+    private GridLayout gridLayout1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,5 +25,11 @@ public class PhotoSelectorViewTestActivity extends Activity {
 
         gridLayout = findViewById(R.id.gv_layout);
         gridLayout.notifyDataSetChanged(7);
+
+        gridView1 = findViewById(R.id.gv_test1);
+        gridView1.notifyDataSetChanged(8);
+
+        gridLayout1 = findViewById(R.id.gv_layout1);
+        gridLayout1.notifyDataSetChanged(8);
     }
 }
