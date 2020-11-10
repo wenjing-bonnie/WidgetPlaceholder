@@ -19,11 +19,13 @@ import java.util.List;
 
 /**
  * Created by wenjing.liu on 2020/11/5 in J1.
+ * 继承ViewGroup来实现网格UI
  *
  * @author wenjing.liu
  */
 public class GridLayout extends ViewGroup {
-    private final String TAG = "GridView";
+    private final String TAG = "GridLayout";
+    private GridView.OnItemClickListener itemClickListener;
     private boolean DEBUG = true;
     private Context context;
     /**
@@ -63,6 +65,13 @@ public class GridLayout extends ViewGroup {
 
     private List<PhotoSelectorItem> childGroup;
 
+    /**
+     * 每个Item的点击事件
+     */
+    public interface OnItemClickListener {
+        void onItemClick(PhotoSelectorItem item);
+    }
+
     public GridLayout(Context context) {
         this(context, null);
     }
@@ -99,6 +108,7 @@ public class GridLayout extends ViewGroup {
         }
         array.recycle();
     }
+
     /**
      * 更新显示的个数
      *
@@ -116,6 +126,15 @@ public class GridLayout extends ViewGroup {
         setAllChildView();
         //刷新UI
         requestLayout();
+    }
+
+    /**
+     * 设置点击事件
+     *
+     * @param listener
+     */
+    public void setOnItemClickListener(GridView.OnItemClickListener listener) {
+        this.itemClickListener = listener;
     }
 
     /**
@@ -230,8 +249,6 @@ public class GridLayout extends ViewGroup {
     }
 
 
-
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         int leftItem, topItem, rightItem, bottomItem = 0;
@@ -254,6 +271,7 @@ public class GridLayout extends ViewGroup {
                     Log.d(TAG, String.format("onLayout row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, leftItem, topItem, rightItem, bottomItem));
                 }
                 child.layout(leftItem, topItem, rightItem, bottomItem);
+                //区别于GridView的不同地方
                 addView(child);
             }
         }
@@ -268,13 +286,24 @@ public class GridLayout extends ViewGroup {
     }
 
     private PhotoSelectorItem getChildItem(int index, boolean isCanContinue) {
-        PhotoSelectorItem item = new PhotoSelectorItem(context);
+        final PhotoSelectorItem item = new PhotoSelectorItem(context);
         ImageView child = new ImageView(context);
         child.setBackgroundColor(isCanContinue ? Color.GREEN : Color.RED);
-
         item.imageView = child;
         item.isCanContinue = isCanContinue;
         item.position = index;
+        child.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (DEBUG) {
+                    Log.e(TAG, String.format("OnClickListener 第%d个", item.position));
+                }
+                if (itemClickListener == null) {
+                    return;
+                }
+                itemClickListener.onItemClick(item);
+            }
+        });
         return item;
     }
 }

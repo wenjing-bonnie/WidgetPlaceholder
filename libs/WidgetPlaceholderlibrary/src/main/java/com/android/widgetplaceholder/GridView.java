@@ -20,6 +20,7 @@ import java.util.List;
 
 /**
  * Created by wenjing.liu on 2020/11/5 in J1.
+ * 继承于View来实现网格UI
  *
  * @author wenjing.liu
  */
