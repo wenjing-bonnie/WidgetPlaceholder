@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -125,6 +126,7 @@ public class PhotoSelectorView extends View {
         if (DEBUG) {
             Log.d(TAG, String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
         }
+        array.recycle();
     }
 
     /**
@@ -289,7 +291,6 @@ public class PhotoSelectorView extends View {
         if (DEBUG) {
             Log.v(TAG, String.format(" onLayout 初始化的位置 left = %d , top = %d , right = %d, bottom = %d ", l, t, r, b));
         }
-        int firstItemPaddingLeft, firstItemPaddingTop = 0;
         //每行
         for (int row = 0; row < mNumRow; row++) {
             //每列
@@ -304,8 +305,8 @@ public class PhotoSelectorView extends View {
                 ImageView child = item.imageView;
                 item.updateImageView();
                 //更新位置
-                left = l + mColumnWidth * col + mHorizontalSpacing * col;
-                top = t + mColumnWidth * row + mVerticalSpacing * row;
+                left = paddingLeft + mColumnWidth * col + mHorizontalSpacing * col;
+                top = paddingTop + mColumnWidth * row + mVerticalSpacing * row;
                 right = left + mColumnWidth;
                 bottom = top + mColumnWidth;
 
@@ -449,10 +450,11 @@ public class PhotoSelectorView extends View {
         // imageView.setCornerType();
         //如果可以添加的，则为默认的添加的icon
         if (isCanContinue) {
-            imageView.setImageResource(R.drawable.icon_camera);
+            // imageView.setImageResource(R.drawable.icon_camera);
         } else {
-            item.updateImageView();
+            // item.updateImageView();
         }
+        imageView.setBackgroundColor(Color.RED);
 
         return item;
     }

@@ -17,6 +17,7 @@ import java.util.List;
 public class PhotoSelectorViewTestActivity extends Activity {
     private PhotoSelectorView selectorView;
     private PhotoSelectorLayout selectorLayout;
+    private GridView gridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class PhotoSelectorViewTestActivity extends Activity {
         setContentView(R.layout.activity_photo_selector_view);
         selectorView = findViewById(R.id.psv_test);
         selectorLayout = findViewById(R.id.psv_test1);
+        gridView = findViewById(R.id.gv_test);
 
 
         Uri defaultUri = Uri.fromFile(new File(String.valueOf(R.drawable.icon_camera)));
@@ -34,5 +36,6 @@ public class PhotoSelectorViewTestActivity extends Activity {
         }
         selectorView.notifyDataSetChanged(uris);
         selectorLayout.notifyDataSetChanged(uris);
+        gridView.notifyDataSetChanged(7);
     }
 }

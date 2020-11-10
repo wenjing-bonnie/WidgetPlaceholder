@@ -1,35 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:psv="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-
-    <com.android.widgetplaceholder.PhotoSelectorView
-        android:id="@+id/psv_test"
+    <com.android.widgetplaceholder.GridView
+        android:id="@+id/gv_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="50px"
-        android:background="@android:color/holo_orange_light"
         android:padding="50px"
-        psv:defaultDrawableReference="@drawable/ic_launcher_foreground"
         psv:horizontalSpacing="50px"
-        psv:numColumns="3"
-        psv:verticalSpacing="50px" />
-
-    <com.android.widgetplaceholder.PhotoSelectorLayout
-        android:id="@+id/psv_test1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/psv_test"
-        android:layout_margin="50px"
-        android:layout_marginTop="50px"
-        android:background="@android:color/holo_blue_light"
-        android:padding="50px"
-        psv:defaultDrawableReference="@drawable/ic_launcher_foreground"
-        psv:horizontalSpacing="50px"
-        psv:numColumns="3"
+        psv:numColumns="4"
         psv:verticalSpacing="50px" />
 
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="100px"
+        android:orientation="vertical"
+        android:padding="100px">
+
+
+        <com.android.widgetplaceholder.PhotoSelectorView
+            android:id="@+id/psv_test"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="50px"
+            android:background="@android:color/holo_orange_light"
+            android:padding="50px"
+            psv:defaultDrawableReference="@drawable/ic_launcher_foreground"
+            psv:horizontalSpacing="50px"
+            psv:numColumns="3"
+            psv:verticalSpacing="50px" />
+
+        <com.android.widgetplaceholder.PhotoSelectorLayout
+            android:id="@+id/psv_test1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/psv_test"
+            android:layout_margin="50px"
+            android:layout_marginTop="50px"
+            android:background="@android:color/holo_blue_light"
+            android:padding="50px"
+            psv:defaultDrawableReference="@drawable/ic_launcher_foreground"
+            psv:horizontalSpacing="50px"
+            psv:numColumns="3"
+            psv:verticalSpacing="50px" />
+
+    </LinearLayout>
+</LinearLayout>
