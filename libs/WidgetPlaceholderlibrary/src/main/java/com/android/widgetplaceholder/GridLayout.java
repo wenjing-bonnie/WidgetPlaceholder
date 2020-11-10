@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author wenjing.liu
  */
-public class GridView extends View {
+public class GridLayout extends ViewGroup {
     private final String TAG = "GridView";
     private boolean DEBUG = true;
     private Context context;
@@ -63,11 +63,11 @@ public class GridView extends View {
 
     private List<PhotoSelectorItem> childGroup;
 
-    public GridView(Context context) {
+    public GridLayout(Context context) {
         this(context, null);
     }
 
-    public GridView(Context context, @Nullable AttributeSet attrs) {
+    public GridLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         childGroup = new ArrayList<>();
@@ -226,9 +226,10 @@ public class GridView extends View {
     }
 
 
+
+
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
         int leftItem, topItem, rightItem, bottomItem = 0;
         //每行
         for (int row = 0; row < mNumRow; row++) {
@@ -253,45 +254,6 @@ public class GridView extends View {
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        int transX, transY;
-        //每行
-        for (int row = 0; row < mNumRow; row++) {
-            //将画布坐标系移到每一行的第一列.原canvas是从该view的(0,0)的位置开始的
-            if (row > 0) {
-                transX = -(mColumnWidth + mHorizontalSpacing) * (mNumColumns - 1);
-                transY = mColumnWidth + mVerticalSpacing;
-
-            } else {
-                transX = paddingLeft;
-                transY = paddingTop;
-            }
-            canvas.translate(transX, transY);
-            //每列
-            for (int col = 0; col < mNumColumns; col++) {
-                int index = row * mNumColumns + col;
-                if (index >= childGroup.size()) {
-                    break;
-                }
-
-                ImageView child = childGroup.get(index).imageView;
-                child.draw(canvas);
-                if (DEBUG) {
-                    Log.v(TAG, String.format("onDraw row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, child.getLeft(), child.getTop(), child.getRight(), child.getBottom()));
-                }
-                //只要不是最后一列，都要将画布的坐标系依次向后移动
-                if (col < mNumColumns - 1) {
-                    //平移的是相对于自身的位置
-                    canvas.translate((mColumnWidth + mHorizontalSpacing), 0);
-                }
-                canvas.save();
-            }
-        }
-        canvas.restore();
-
-    }
 
     private void setAllChildView() {
         childGroup.clear();
