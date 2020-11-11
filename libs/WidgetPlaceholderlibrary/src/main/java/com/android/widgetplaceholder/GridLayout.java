@@ -275,7 +275,8 @@ public class GridLayout extends ViewGroup {
     private PhotoSelectorItem getChildItem(int index, boolean isCanContinue) {
         final PhotoSelectorItem item = new PhotoSelectorItem(context);
         ImageView child = new ImageView(context);
-        child.setBackgroundColor(isCanContinue ? Color.GREEN : Color.RED);
+        child.setImageResource(isCanContinue ? R.drawable.icon_camera : R.drawable.ic_launcher);
+        child.setBackgroundResource(R.drawable.bg);
         item.imageView = child;
         item.isCanContinue = isCanContinue;
         item.position = index;
