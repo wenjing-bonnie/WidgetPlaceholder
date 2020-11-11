@@ -82,6 +82,7 @@ public class GridView extends View {
         this.context = context;
         childGroup = new ArrayList<>();
         initAttributes(attrs);
+        notifyDataSetChanged(8);
     }
 
     private void initAttributes(AttributeSet attrs) {
@@ -150,6 +151,7 @@ public class GridView extends View {
 
         //该控件的宽度
         int width = measureWidth(widthMeasureSpec);
+
         //根据控件的width和mNumColumns（默认为4个）的计算每个item的宽度
         updateColumnWidth();
 
@@ -172,14 +174,13 @@ public class GridView extends View {
     private int measureWidth(int widthMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-
         int width = widthSize;
         switch (widthMode) {
             case MeasureSpec.EXACTLY:
                 //固定尺寸,需要重新设置下每个column的宽度,要保证这个item能够显示出来
+            case MeasureSpec.AT_MOST:
                 width = widthSize;
                 break;
-            case MeasureSpec.AT_MOST:
             case MeasureSpec.UNSPECIFIED:
                 // match_parent/wrap_content,根据下面方法的计算规则，重新计算width
                 width = measureWidth();
@@ -203,17 +204,6 @@ public class GridView extends View {
             throw new IllegalArgumentException("You should set NumColumns > 0 !");
         }
 
-        //如果该ViewGroup的有父控件，则取父控件的宽度
-        View parent = (View) getParent();
-        if (parent != null) {
-            width = parent.getMeasuredWidth();
-            if (DEBUG) {
-                Log.e(TAG, mVerticalSpacing + "px parent width  = " + width);
-            }
-            if (width > 0) {
-                return width;
-            }
-        }
         //屏幕宽度
         if ((context instanceof Activity) &&
                 (getLayoutParams() instanceof ViewGroup.MarginLayoutParams)) {

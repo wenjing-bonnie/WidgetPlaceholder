@@ -202,17 +202,6 @@ public class GridLayout extends ViewGroup {
             throw new IllegalArgumentException("You should set NumColumns > 0 !");
         }
 
-        //如果该ViewGroup的有父控件，则取父控件的宽度
-        View parent = (View) getParent();
-        if (parent != null) {
-            width = parent.getMeasuredWidth();
-            if (DEBUG) {
-                Log.e(TAG, mVerticalSpacing + "px parent width  = " + width);
-            }
-            if (width > 0) {
-                return width;
-            }
-        }
         //屏幕宽度
         if ((context instanceof Activity) &&
                 (getLayoutParams() instanceof ViewGroup.MarginLayoutParams)) {
