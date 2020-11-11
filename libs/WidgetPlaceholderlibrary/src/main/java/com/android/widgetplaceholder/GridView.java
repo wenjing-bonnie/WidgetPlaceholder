@@ -192,10 +192,8 @@ public class GridView extends View {
 
     /**
      * 计算控件的宽度的顺序为：(不包括margin，但是含padding的宽度)
-     * （1）根据传入的ViewGroup的宽度则为具体值.
-     * （2）若没有设置width，则若有父控件，则读取父控件的宽度
-     * （3）否则采用屏幕宽度
-     * （4）否则为默认的宽度
+     * （1）采用屏幕宽度
+     * （2）否则为默认的宽度
      */
     private int measureWidth() {
         int width = 0;
