@@ -2,19 +2,18 @@ package com.android.widgetplaceholder;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+
+import com.android.widgetplaceholder.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,20 +74,24 @@ public class GridView extends View {
     }
 
     public GridView(Context context) {
-        this(context, null);
+        this(context, null, -1, 0);
+        Log.v("GridView 111111");
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, R.style.DefaultGridViewStyleRes, 0);
 
+        Log.v("GridView 222222");
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
+        Log.v("GridView 333333");
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        Log.v("GridView 444444");
         this.context = context;
         childGroup = new ArrayList<>();
         initAttributes(attrs, defStyleAttr, defStyleRes);
@@ -96,32 +99,33 @@ public class GridView extends View {
 
     }
 
+
     private void initAttributes(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         if (attrs == null) {
             return;
         }
+
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PhotoSelectorView);
         if (array == null) {
             return;
         }
 
+        Log.d(String.format("defStyleAttr = %d , defStyleRes = %d", defStyleAttr, defStyleRes));
         mVerticalSpacing = array.getDimensionPixelSize(R.styleable.PhotoSelectorView_verticalSpacing, 0);
         mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.PhotoSelectorView_horizontalSpacing, 0);
         maxNumber = array.getInt(R.styleable.PhotoSelectorView_maxNumber, 0);
         mNumColumns = array.getInt(R.styleable.PhotoSelectorView_numColumns, 4);
 
-        if (DEBUG) {
-            Log.d(TAG, String.format("mNumColumns = %d ", mNumColumns));
-        }
+        Log.d(String.format("mNumColumns = %d ", mNumColumns));
+
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();
         paddingTop = getPaddingTop();
         paddingBottom = getPaddingBottom();
 
-        if (DEBUG) {
-            Log.d(TAG, String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
-        }
+        Log.d(String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
+
         array.recycle();
     }
 
@@ -173,9 +177,7 @@ public class GridView extends View {
         int height = measureHeight(heightMeasureSpec);
         //设置ViewGroup的宽和高
         setMeasuredDimension(width, height);
-        if (DEBUG) {
-            Log.d(TAG, String.format("onMeasure width = %d , height = %d, mColumnWidth = %d ", width, height, mColumnWidth));
-        }
+        Log.d(String.format("onMeasure width = %d , height = %d, mColumnWidth = %d ", width, height, mColumnWidth));
     }
 
     /**
@@ -271,9 +273,8 @@ public class GridView extends View {
                 topItem = paddingTop + (mColumnWidth + mVerticalSpacing) * row;
                 rightItem = leftItem + mColumnWidth;
                 bottomItem = topItem + mColumnWidth;
-                if (DEBUG) {
-                    Log.d(TAG, String.format("onLayout row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, leftItem, topItem, rightItem, bottomItem));
-                }
+
+                Log.d(String.format("onLayout row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, leftItem, topItem, rightItem, bottomItem));
                 child.layout(leftItem, topItem, rightItem, bottomItem);
             }
         }
@@ -304,9 +305,9 @@ public class GridView extends View {
 
                 ImageView child = childGroup.get(index).imageView;
                 child.draw(canvas);
-                if (DEBUG) {
-                    Log.v(TAG, String.format("onDraw row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, child.getLeft(), child.getTop(), child.getRight(), child.getBottom()));
-                }
+
+                Log.d(String.format("onDraw row = %d, col = %d, left =%d , top = %d, right = %d, bottom = %d", row, col, child.getLeft(), child.getTop(), child.getRight(), child.getBottom()));
+
                 //只要不是最后一列，都要将画布的坐标系依次向后移动
                 if (col < mNumColumns - 1) {
                     //平移的是相对于自身的位置
@@ -322,9 +323,9 @@ public class GridView extends View {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 int index = touchWhichItem(event);
-                if (DEBUG) {
-                    Log.e(TAG, String.format("onTouchEvent 第%d个", index));
-                }
+
+                Log.d(String.format("onTouchEvent 第%d个", index));
+
                 if (index < 0 || index > childGroup.size() || itemClickListener == null) {
                     return super.onTouchEvent(event);
                 }
@@ -343,9 +344,7 @@ public class GridView extends View {
         float eventY = event.getY();
         int left, top, right, bottom;
         int index = 0;
-        if (DEBUG) {
-            Log.w(TAG, String.format("touchWhichItem  x =%f , y = %f", eventX, eventY));
-        }
+        Log.v(String.format("touchWhichItem  x =%f , y = %f", eventX, eventY));
         for (PhotoSelectorItem item : childGroup) {
             ImageView image = item.imageView;
             //返回的是该imageView在View中的坐标位置
@@ -354,9 +353,9 @@ public class GridView extends View {
             right = image.getRight();
             bottom = image.getBottom();
             //event返回的是该点在View的坐标系中的位置
-            if (DEBUG) {
-                Log.v(TAG, String.format("touchWhichItem  left =%d , top = %d, right = %d, bottom = %d", left, top, right, bottom));
-            }
+
+            Log.v(String.format("touchWhichItem  left =%d , top = %d, right = %d, bottom = %d", left, top, right, bottom));
+
             //所以这个是可以直接进行比较
             if (eventX >= left && eventX <= right && eventY <= bottom && eventY >= top) {
                 return index;

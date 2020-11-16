@@ -52,7 +52,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.logV(TAG, "onFinishInflate");
+        Log.v("onFinishInflate");
     }
 
     /**
@@ -64,7 +64,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onVisibilityChanged(@NonNull View changedView, int visibility) {
         super.onVisibilityChanged(changedView, visibility);
-        Log.logV(TAG, "onVisibilityChanged");
+        Log.v("onVisibilityChanged");
     }
 
     /**
@@ -73,7 +73,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Log.logV(TAG, "onAttachedToWindow");
+        Log.v("onAttachedToWindow");
     }
 
     /**
@@ -84,8 +84,8 @@ public class PlaceHolderView extends View {
      * widthMeasureSpec和heightMeasureSpec并不是控件的width和height，
      * 而是包含两部分信息：测量模式和测量大小（int为32位：前2位区分模式，后30位存放尺寸）
      * widthMode =
-     *
-     *
+     * <p>
+     * <p>
      * 如果继承于ViewGroup：
      * （1）每个子View的大小
      * （2）根据子View计算出ViewGroup的大小
@@ -96,7 +96,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        Log.logV(TAG, "onMeasure");
+        Log.v("onMeasure");
         //1.通过这两个方法可以取出模式和尺寸
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -114,7 +114,7 @@ public class PlaceHolderView extends View {
 
     /**
      * 确定View需要为子View分配尺寸和位置
-     *
+     * <p>
      * 如果继承于ViewGroup：
      * 放置子View的位置：child.layout(l, t, l +width, t + height);
      *
@@ -127,7 +127,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        Log.logV(TAG, "onLayout");
+        Log.v("onLayout");
     }
 
     /**
@@ -139,7 +139,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Log.logV(TAG, "onDraw");
+        Log.v("onDraw");
     }
 
     /**
@@ -148,7 +148,7 @@ public class PlaceHolderView extends View {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        Log.logV(TAG, "onDetachedFromWindow");
+        Log.v("onDetachedFromWindow");
     }
 
 

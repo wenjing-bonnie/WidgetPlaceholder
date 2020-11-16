@@ -21,8 +21,9 @@
 
         <activity android:name=".OtherActivity" />
 
-        <activity android:name=".PhotoSelectorViewTestActivity"
-            android:theme="@style/DefaultGridViewStyleRes"/>
+        <activity
+            android:name=".PhotoSelectorViewTestActivity"
+            android:theme="@style/DefaultGridViewStyleRes" />
     </application>
 
 </manifest>

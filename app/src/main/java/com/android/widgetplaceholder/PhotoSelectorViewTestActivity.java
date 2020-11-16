@@ -20,15 +20,18 @@ public class PhotoSelectorViewTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_photo_selector_view);
-        gridView = findViewById(R.id.gv_test);
-        gridView.notifyDataSetChanged(7);
-        gridView.setOnItemClickListener(new GridView.OnItemClickListener() {
-            @Override
-            public void onItemClick(PhotoSelectorItem item) {
-                Log.v("PhotoSelector", "点击的是第 " + item.position);
-            }
-        });
+       setContentView(R.layout.activity_photo_selector_view);
+//        gridView = findViewById(R.id.gv_test);
+//        gridView.notifyDataSetChanged(7);
+//        gridView.setOnItemClickListener(new GridView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(PhotoSelectorItem item) {
+//                Log.v("PhotoSelector", "点击的是第 " + item.position);
+//            }
+//        });
+//        gridView1 = findViewById(R.id.gv_test1);
+//        gridView1.notifyDataSetChanged(8);
+
 
         gridLayout = findViewById(R.id.gv_layout);
         gridLayout.notifyDataSetChanged(7);
@@ -38,10 +41,6 @@ public class PhotoSelectorViewTestActivity extends Activity {
                 Log.v("PhotoSelector", "点击的是第 " + item.position);
             }
         });
-
-        gridView1 = findViewById(R.id.gv_test1);
-        gridView1.notifyDataSetChanged(8);
-
         gridLayout1 = findViewById(R.id.gv_layout1);
         gridLayout1.notifyDataSetChanged(8);
     }

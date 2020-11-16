@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.logD("MainActivity", "onCreate");
+        Log.d("onCreate");
         setContentView(R.layout.activity_main);
         initWidget();
     }
@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.logD("MainActivity", "onResume");
+        Log.d("onResume");
     }
 
     private void initWidget() {
@@ -47,13 +47,13 @@ public class MainActivity extends Activity {
     }
 
     public void viewInvisible(View view) {
-        Log.logD("MainActivity", "count = " + count);
+        Log.d("count = " + count);
         phvView.setVisibility(count % 2 == 0 ? View.INVISIBLE : View.VISIBLE);
         count++;
     }
 
     public void viewGone(View view) {
-        Log.logD("MainActivity", "count = " + count);
+        Log.d("count = " + count);
         phvView.setVisibility(count % 2 == 0 ? View.GONE : View.VISIBLE);
         count++;
     }
