@@ -7,4 +7,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GridView">
+        <item name="numColumns">14</item>
+    </style>
+
 </resources>

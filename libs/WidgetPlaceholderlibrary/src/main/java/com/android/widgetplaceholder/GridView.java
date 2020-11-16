@@ -2,6 +2,7 @@ package com.android.widgetplaceholder;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -78,14 +79,24 @@ public class GridView extends View {
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        childGroup = new ArrayList<>();
-        initAttributes(attrs);
-        notifyDataSetChanged(8);
+        this(context, attrs, R.style.DefaultGridViewStyleRes, 0);
+
     }
 
-    private void initAttributes(AttributeSet attrs) {
+    public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        this(context, attrs, defStyleAttr, 0);
+    }
+
+    public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+        this.context = context;
+        childGroup = new ArrayList<>();
+        initAttributes(attrs, defStyleAttr, defStyleRes);
+        notifyDataSetChanged(8);
+
+    }
+
+    private void initAttributes(AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         if (attrs == null) {
             return;
         }
@@ -100,6 +111,9 @@ public class GridView extends View {
         maxNumber = array.getInt(R.styleable.PhotoSelectorView_maxNumber, 0);
         mNumColumns = array.getInt(R.styleable.PhotoSelectorView_numColumns, 4);
 
+        if (DEBUG) {
+            Log.d(TAG, String.format("mNumColumns = %d ", mNumColumns));
+        }
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();
         paddingTop = getPaddingTop();
