@@ -25,9 +25,7 @@ import java.util.List;
  * @author wenjing.liu
  */
 public class GridView extends View {
-    private final String TAG = "GridView";
     private OnItemClickListener itemClickListener;
-    private boolean DEBUG = true;
     private Context context;
     /**
      * 不包括四周的边距
