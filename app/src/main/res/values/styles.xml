@@ -7,8 +7,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="GridView">
-        <item name="numColumns">14</item>
+    <style name="GridViewTheme">
+        <item name="initNum">10</item>
+        <item name="name">通过Activity的Theme 设置的名字</item>
+        <item name="GridViewStyle">@style/GridViewStyleInTheme</item>
+    </style>
+
+    <style name="GridViewStyleInTheme">
+        <item name="initNum">11</item>
+        <item name="name">放置到style中然后放置到Theme其中的一个属性中 设置的名字</item>
+    </style>
+
+    <style name="GridViewInLayout">
+        <item name="initNum">12</item>
+        <item name="name">作为布局文件的style 设置的名字</item>
     </style>
 
 </resources>

@@ -15,19 +15,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="50px"
-            android:theme="@style/AppTheme"
             psv:horizontalSpacing="50px"
             psv:verticalSpacing="50px" />
 
 
-        <!--        <com.android.widgetplaceholder.GridView-->
-        <!--            android:id="@+id/gv_test111"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:padding="50px"-->
-        <!--            psv:horizontalSpacing="50px"-->
-        <!--            psv:verticalSpacing="50px"-->
-        <!--            style="@style/DefaultGridViewStyleRes"/>-->
+        <com.android.widgetplaceholder.GridView
+            android:id="@+id/gv_test111"
+            style="@style/GridViewInLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="50px"
+            psv:horizontalSpacing="50px"
+            psv:verticalSpacing="50px" />
 
         <com.android.widgetplaceholder.GridLayout
             android:id="@+id/gv_layout"

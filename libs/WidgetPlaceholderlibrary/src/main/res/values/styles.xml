@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<style name="DefaultGridViewStyleRes">
-    <item name="numColumns">14</item>
-</style>
+
+    <style name="DefaultGridViewStyleRes">
+        <item name="initNum">14</item>
+        <item name="name">默认的style样式中设置的名字</item>
+    </style>
 </resources>

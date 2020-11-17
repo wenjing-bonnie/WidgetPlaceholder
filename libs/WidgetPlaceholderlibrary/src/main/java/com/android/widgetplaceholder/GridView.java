@@ -59,6 +59,14 @@ public class GridView extends View {
      * 最多可显示的图片数量，若不设置，则传入集合为多少就显示多少
      */
     private int maxNumber;
+    /**
+     * 初始化个数
+     */
+    private int initNum;
+    /**
+     * 测试不同的设置属性值的优先级
+     */
+    private String name;
 
     private int childCount;
 
@@ -73,27 +81,32 @@ public class GridView extends View {
 
     public GridView(Context context) {
         this(context, null, -1, 0);
-        Log.v("GridView 111111");
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, R.style.DefaultGridViewStyleRes, 0);
-
-        Log.v("GridView 222222");
+        this(context, attrs, R.attr.GridViewStyle, 0);
     }
 
     public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
-        Log.v("GridView 333333");
     }
 
+    /**
+     *
+     * @param context
+     * @param attrs
+     * @param defStyleAttr 对应的是R.attr
+     * @param defStyleRes 对应的是R.style
+     */
     public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        Log.v("GridView 444444");
         this.context = context;
         childGroup = new ArrayList<>();
         initAttributes(attrs, defStyleAttr, defStyleRes);
-        notifyDataSetChanged(8);
+        //TODO 测试使用，最后需要删除
+        if (initNum > 0) {
+            notifyDataSetChanged(initNum);
+        }
 
     }
 
@@ -103,26 +116,28 @@ public class GridView extends View {
             return;
         }
 
-
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PhotoSelectorView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GridView, defStyleAttr, defStyleRes);
         if (array == null) {
             return;
         }
 
         Log.d(String.format("defStyleAttr = %d , defStyleRes = %d", defStyleAttr, defStyleRes));
-        mVerticalSpacing = array.getDimensionPixelSize(R.styleable.PhotoSelectorView_verticalSpacing, 0);
-        mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.PhotoSelectorView_horizontalSpacing, 0);
-        maxNumber = array.getInt(R.styleable.PhotoSelectorView_maxNumber, 0);
-        mNumColumns = array.getInt(R.styleable.PhotoSelectorView_numColumns, 4);
+        mVerticalSpacing = array.getDimensionPixelSize(R.styleable.GridView_verticalSpacing, 0);
+        mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.GridView_horizontalSpacing, 0);
+        maxNumber = array.getInt(R.styleable.GridView_maxNumber, 0);
+        mNumColumns = array.getInt(R.styleable.GridView_numColumns, 4);
+        initNum = array.getInt(R.styleable.GridView_initNum, 1);
+        name = array.getString(R.styleable.GridView_name);
 
-        Log.d(String.format("mNumColumns = %d ", mNumColumns));
+        Log.v(String.format("mNumColumns = %d , initNum = %d , name = %s", mNumColumns, initNum, name));
 
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();
         paddingTop = getPaddingTop();
         paddingBottom = getPaddingBottom();
 
-        Log.d(String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
+
+        //Log.d(String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
 
         array.recycle();
     }

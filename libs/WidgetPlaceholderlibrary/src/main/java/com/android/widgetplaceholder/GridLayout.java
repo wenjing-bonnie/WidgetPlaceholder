@@ -3,8 +3,6 @@ package com.android.widgetplaceholder;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -88,15 +86,15 @@ public class GridLayout extends ViewGroup {
             return;
         }
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.PhotoSelectorView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GridView);
         if (array == null) {
             return;
         }
 
-        mVerticalSpacing = array.getDimensionPixelSize(R.styleable.PhotoSelectorView_verticalSpacing, 0);
-        mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.PhotoSelectorView_horizontalSpacing, 0);
-        maxNumber = array.getInt(R.styleable.PhotoSelectorView_maxNumber, 0);
-        mNumColumns = array.getInt(R.styleable.PhotoSelectorView_numColumns, 4);
+        mVerticalSpacing = array.getDimensionPixelSize(R.styleable.GridView_verticalSpacing, 0);
+        mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.GridView_horizontalSpacing, 0);
+        maxNumber = array.getInt(R.styleable.GridView_maxNumber, 0);
+        mNumColumns = array.getInt(R.styleable.GridView_numColumns, 4);
 
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();

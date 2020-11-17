@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PhotoSelectorView">
+    <declare-styleable name="GridView">
         <attr name="verticalSpacing" format="dimension" />
         <attr name="horizontalSpacing" format="dimension" />
         <attr name="maxNumber" format="integer" />
@@ -8,6 +8,12 @@
         <attr name="defaultDrawableReference" format="reference" />
         <!--默认设置图片的大小-->
         <attr name="columnWidth" format="dimension" />
+        <!-- 初始化的个数-->
+        <attr name="initNum" format="integer" />
+        <!--测试不同的构造函数调用周期-->
+        <attr name="name" format="string" />
 
     </declare-styleable>
+    <!--通过单独的属性来设置属性值-->
+    <attr name="GridViewStyle" format="reference" />
 </resources>
