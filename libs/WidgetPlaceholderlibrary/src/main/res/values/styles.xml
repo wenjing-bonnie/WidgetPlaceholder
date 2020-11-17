@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="DefaultGridViewStyleAttr">
+        <item name="name">默认的styleAttr样式中 设置的名字</item>
+        <item name="initNum">4</item>
+    </style>
+
     <style name="DefaultGridViewStyleRes">
-        <item name="initNum">14</item>
-        <item name="name">默认的style样式中设置的名字</item>
+        <item name="name">默认的styleRes样式中 设置的名字</item>
+        <item name="initNum">4</item>
     </style>
 </resources>

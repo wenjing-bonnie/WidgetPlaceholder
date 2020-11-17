@@ -63,11 +63,11 @@ public class MainActivity extends Activity {
     }
 
     public void goExtendsView(View view) {
-        startActivity(PhotoSelectorViewTestActivity.class);
+        startActivity(GridViewAttrSettingTestActivity.class);
     }
 
     private void startActivity(Class<?> targetClass) {
-        Intent intent = new Intent(MainActivity.this, PhotoSelectorViewTestActivity.class);
+        Intent intent = new Intent(MainActivity.this, GridViewAttrSettingTestActivity.class);
         startActivity(intent);
     }
 }

@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/holo_blue_light"
             android:onClick="onThemeWithoutDefStyleAttr"
-            android:text="去测试一个没有defStyleAttr主题的Activity" />
+            android:text="返回前一个页面" />
 
     </LinearLayout>
 </ScrollView>

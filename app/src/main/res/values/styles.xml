@@ -7,8 +7,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--在Activity定义Theme时使用defStyleAttr-->
     <style name="GridViewTheme">
-        <item name="initNum">10</item>
+        <item name="initNum">4</item>
         <item name="name">通过Activity的Theme 设置的名字</item>
         <item name="GridViewStyle">@style/GridViewStyleInTheme</item>
     </style>
@@ -18,9 +19,15 @@
         <item name="name">放置到style中然后放置到Theme其中的一个属性中 设置的名字</item>
     </style>
 
+    <!--在Activity定义Theme时无默认的style应用-->
+    <style name="GridViewThemeAttr0">
+        <item name="initNum">5</item>
+        <item name="name">通过Activity的Theme 设置的名字</item>
+    </style>
+
     <style name="GridViewInLayout">
-        <item name="initNum">12</item>
-        <item name="name">作为布局文件的style 设置的名字</item>
+        <item name="initNum">2</item>
+        <item name="name">通过布局文件引入style,在该style中 设置的名字</item>
     </style>
 
 </resources>

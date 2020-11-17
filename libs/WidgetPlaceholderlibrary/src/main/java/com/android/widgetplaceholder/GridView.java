@@ -92,22 +92,16 @@ public class GridView extends View {
     }
 
     /**
-     *
      * @param context
      * @param attrs
      * @param defStyleAttr 对应的是R.attr
-     * @param defStyleRes 对应的是R.style
+     * @param defStyleRes  对应的是R.style
      */
     public GridView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         this.context = context;
         childGroup = new ArrayList<>();
         initAttributes(attrs, defStyleAttr, defStyleRes);
-        //TODO 测试使用，最后需要删除
-        if (initNum > 0) {
-            notifyDataSetChanged(initNum);
-        }
-
     }
 
 
@@ -136,9 +130,11 @@ public class GridView extends View {
         paddingTop = getPaddingTop();
         paddingBottom = getPaddingBottom();
 
+        if (initNum > 0) {
+            notifyDataSetChanged(initNum);
+        }
 
         //Log.d(String.format("paddingLeft = %d , paddingRight = %d ", paddingLeft, paddingRight));
-
         array.recycle();
     }
 
