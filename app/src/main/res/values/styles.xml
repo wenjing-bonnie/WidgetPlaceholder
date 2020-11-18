@@ -19,9 +19,6 @@
         <item name="name">通过Theme的defStyleAttr属性 设置的名字 优先级3</item>
     </style>
 
-    <style name="GridViewStyleNoInTheme">
-        <item name="initNum">5</item>
-    </style>
 
     <!--在Activity定义Theme时无默认的style应用-->
     <style name="GridViewThemeAttr0">
@@ -33,8 +30,13 @@
     <style name="GridViewThemeAttr1">
         <item name="initNum">5</item>
         <item name="name">通过在Theme的添加name属性并且没有defStyleAttr 设置的名字 优先级为5</item>
-        <item name="GridViewStyle">@style/GridViewThemeAttr1</item>
+        <item name="GridViewStyle">@style/GridViewStyleNoInTheme</item>
     </style>
+
+    <style name="GridViewStyleNoInTheme">
+        <item name="initNum">5</item>
+    </style>
+
 
     <style name="GridViewInLayout">
         <item name="initNum">2</item>

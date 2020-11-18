@@ -1,7 +1,9 @@
-package com.android.widgetplaceholder;
+package com.android.viewlife;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.android.widgetplaceholder.R;
 
 /**
  * Created by wenjing.liu on 2020/10/10 in J1.

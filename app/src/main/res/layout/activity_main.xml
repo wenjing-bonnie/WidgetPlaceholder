@@ -5,67 +5,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-    <!--用来测试PlaceHolderView-->
-
-    <TextView
-        android:id="@+id/tv_wrap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试PlaceHolderView wrap content text view" />
-
-    <TextView
-        android:id="@+id/tv_match"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试PlaceHolderView match parent text view" />
-
-    <ImageView
-        android:id="@+id/iv_wrap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
-
-    <ImageView
-        android:id="@+id/iv_match"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/ic_launcher" />
-
-    <Button
-        android:id="@+id/btn_wrap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="viewInvisible"
-        android:text="测试PlaceHolderView wrap content button" />
-
-    <Button
-        android:id="@+id/btn_match"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="viewGone"
-        android:text="测试PlaceHolderView match parent button" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="goOtherActivity"
-        android:text="go to other activity to test view的生命周期" />
-
-    <!--用来测试PlaceHolderView-->
-
+    <!--用来测试View的生命周期-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="goExtendsView"
-        android:text="自定义View extends View/ViewGroup" />
+        android:onClick="goViewLifeCycleActivity"
+        android:text="view的生命周期" />
 
-
-    <com.android.widgetplaceholder.PlaceHolderView
-        android:id="@+id/phv_view"
-        android:layout_width="wrap_content"
+    <!--用来测试属性设置的优先级-->
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_blue_light"
-        android:visibility="gone" />
+        android:onClick="goGridViewAttrSettingActivity"
+        android:text="属性设置的优先级" />
 
 
 </LinearLayout>

@@ -46,20 +46,5 @@
             psv:horizontalSpacing="50px"
             psv:verticalSpacing="50px" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_blue_light"
-            android:onClick="onThemeWithoutDefStyleAttr"
-            android:text="去改变主题之后，主题中不含defAttrStyle" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/holo_blue_light"
-            android:onClick="onThemeWithDefStyleNoNameAttr"
-            android:text="去改变主题之后，主题中含defAttrStyle，但无name" />
-
     </LinearLayout>
 </ScrollView>
