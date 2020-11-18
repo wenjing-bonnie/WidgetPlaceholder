@@ -109,7 +109,9 @@ public class GridView extends View {
         if (attrs == null) {
             return;
         }
-
+        if (defStyleRes <= 0) {
+            defStyleRes = R.style.DefaultGridViewStyleRes;
+        }
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GridView, defStyleAttr, defStyleRes);
         if (array == null) {
             return;

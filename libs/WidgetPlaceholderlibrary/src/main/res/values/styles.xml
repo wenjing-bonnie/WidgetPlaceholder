@@ -2,12 +2,12 @@
 <resources>
 
     <style name="DefaultGridViewStyleAttr">
-        <item name="name">默认的styleAttr样式中 设置的名字</item>
-        <item name="initNum">4</item>
+        <item name="name">自定义UI的默认的styleAttr样式中 设置的名字</item>
+        <item name="initNum">3</item>
     </style>
 
     <style name="DefaultGridViewStyleRes">
-        <item name="name">默认的styleRes样式中 设置的名字</item>
+        <item name="name">自定义UI的默认的styleRes样式中 设置的名字</item>
         <item name="initNum">4</item>
     </style>
 </resources>

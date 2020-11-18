@@ -12,21 +12,15 @@ import android.view.View;
  *
  * @author wenjing.liu
  */
-public class GridViewAttrSettingTestActivity extends Activity {
+public class GridViewNoThemeAttrSettingTestActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grid_view_attr);
+        setContentView(R.layout.activity_grid_view_attr_without);
     }
 
     public void onThemeWithoutDefStyleAttr(View view) {
-        Intent intent = new Intent(GridViewAttrSettingTestActivity.this, GridViewThemeAttrSettingTestActivity.class);
-        startActivity(intent);
-    }
-
-    public void onDefStyleAttr(View view) {
-        Intent intent = new Intent(GridViewAttrSettingTestActivity.this, GridViewNoThemeAttrSettingTestActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

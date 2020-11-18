@@ -41,7 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="50px"
-
             psv:horizontalSpacing="50px"
             psv:verticalSpacing="50px" />
 
@@ -51,6 +50,13 @@
             android:background="@android:color/holo_blue_light"
             android:onClick="onThemeWithoutDefStyleAttr"
             android:text="去改变主题之后，在重新加载页面" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_blue_light"
+            android:onClick="onDefStyleAttr"
+            android:text="没有任何主题的页面" />
 
     </LinearLayout>
 </ScrollView>
