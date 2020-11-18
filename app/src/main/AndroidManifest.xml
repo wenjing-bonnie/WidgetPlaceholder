@@ -24,9 +24,12 @@
         <activity
             android:name=".GridViewAttrSettingTestActivity"
             android:theme="@style/GridViewTheme" />
+        
         <activity
             android:name=".GridViewThemeAttrSettingTestActivity"
             android:theme="@style/GridViewThemeAttr0" />
+
+        <activity android:name=".GridViewNoThemeAttrSettingTestActivity" />
     </application>
 
 </manifest>
