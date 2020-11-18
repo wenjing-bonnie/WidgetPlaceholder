@@ -16,7 +16,7 @@
             android:padding="50px"
             psv:horizontalSpacing="50px"
             psv:initNum="1"
-            psv:name="直接定义在布局文件中 设置的名字"
+            psv:name="直接定义在布局文件中 设置的名字 优先级为1"
             psv:verticalSpacing="50px" />
 
         <com.android.widgetplaceholder.GridView
@@ -38,6 +38,7 @@
             psv:horizontalSpacing="50px"
             psv:verticalSpacing="50px" />
 
+        <!--优先级为4的情况：在Theme中不定义defStyleAttr属性定义name属性，默认的会使用在控件中定义的defStyleRes中属性-->
         <com.android.widgetplaceholder.GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

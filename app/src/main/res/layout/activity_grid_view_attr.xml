@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <!--优先级为1的情况：在布局文件中定义name属性-->
         <com.android.widgetplaceholder.GridView
             android:id="@+id/gv_test"
             android:layout_width="match_parent"
@@ -16,9 +16,9 @@
             android:padding="50px"
             psv:horizontalSpacing="50px"
             psv:initNum="1"
-            psv:name="直接定义在布局文件中 设置的名字"
+            psv:name="直接定义在布局文件中 设置的名字 优先级为1"
             psv:verticalSpacing="50px" />
-
+        <!--优先级为2的情况：在布局文件的style属性中定义name属性-->
         <com.android.widgetplaceholder.GridView
             android:id="@+id/gv_test111"
             style="@style/GridViewInLayout"
@@ -29,6 +29,7 @@
             psv:initNum="2"
             psv:verticalSpacing="50px" />
 
+        <!--优先级为3的情况：在Theme中通过defStyleAttr属性定义name属性，在控件中使用android:theme不起作用-->
         <com.android.widgetplaceholder.GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
             psv:horizontalSpacing="50px"
             psv:verticalSpacing="50px" />
 
+        <!--优先级为4的情况：在Theme中通过defStyleAttr属性定义name属性-->
         <com.android.widgetplaceholder.GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,14 +52,6 @@
             android:background="@android:color/holo_blue_light"
             android:onClick="onThemeWithoutDefStyleAttr"
             android:text="去改变主题之后，在重新加载页面" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50px"
-            android:background="@android:color/holo_blue_light"
-            android:onClick="onDefStyleAttr"
-            android:text="没有任何主题的页面" />
 
     </LinearLayout>
 </ScrollView>
