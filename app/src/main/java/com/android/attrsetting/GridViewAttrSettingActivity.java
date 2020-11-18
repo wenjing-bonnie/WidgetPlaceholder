@@ -1,13 +1,13 @@
 package com.android.attrsetting;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
 
-public class GridViewAttrSettingActivity extends Activity {
+public class GridViewAttrSettingActivity extends SubActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

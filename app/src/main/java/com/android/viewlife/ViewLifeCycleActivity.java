@@ -8,11 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.base.SubActivity;
 import com.android.widgetplaceholder.PlaceHolderView;
 import com.android.widgetplaceholder.R;
 import com.android.widgetplaceholder.utils.Log;
 
-public class ViewLifeCycleActivity extends Activity {
+public class ViewLifeCycleActivity extends SubActivity {
 
     private TextView tvWrapView;
     private TextView tvMatchView;

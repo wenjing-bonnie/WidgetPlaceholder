@@ -3,6 +3,7 @@ package com.android.viewlife;
 import android.app.Activity;
 import android.os.Bundle;
 
+import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
 
 /**
@@ -10,7 +11,7 @@ import com.android.widgetplaceholder.R;
  *
  * @author wenjing.liu
  */
-public class OtherActivity extends Activity {
+public class OtherActivity extends SubActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

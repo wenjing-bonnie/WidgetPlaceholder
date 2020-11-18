@@ -1,8 +1,8 @@
 package com.android.attrsetting;
 
-import android.app.Activity;
 import android.os.Bundle;
 
+import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
 
 
@@ -13,7 +13,7 @@ import com.android.widgetplaceholder.R;
  *
  * @author wenjing.liu
  */
-public class GridViewAttrTheme1SettingActivity extends Activity {
+public class GridViewAttrTheme1SettingActivity extends SubActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
