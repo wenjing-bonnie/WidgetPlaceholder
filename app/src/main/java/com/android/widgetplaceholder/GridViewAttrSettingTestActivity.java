@@ -25,8 +25,4 @@ public class GridViewAttrSettingTestActivity extends Activity {
         startActivity(intent);
     }
 
-    public void onDefStyleAttr(View view) {
-        Intent intent = new Intent(GridViewAttrSettingTestActivity.this, GridViewNoThemeAttrSettingTestActivity.class);
-        startActivity(intent);
-    }
 }
