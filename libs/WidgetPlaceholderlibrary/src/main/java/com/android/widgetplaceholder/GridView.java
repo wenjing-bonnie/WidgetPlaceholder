@@ -117,7 +117,7 @@ public class GridView extends View {
             return;
         }
 
-        Log.d(String.format("defStyleAttr = %d , defStyleRes = %d", defStyleAttr, defStyleRes));
+        //Log.d(String.format("defStyleAttr = %d , defStyleRes = %d", defStyleAttr, defStyleRes));
         mVerticalSpacing = array.getDimensionPixelSize(R.styleable.GridView_verticalSpacing, 0);
         mHorizontalSpacing = array.getDimensionPixelOffset(R.styleable.GridView_horizontalSpacing, 0);
         maxNumber = array.getInt(R.styleable.GridView_maxNumber, 0);
@@ -125,7 +125,8 @@ public class GridView extends View {
         initNum = array.getInt(R.styleable.GridView_initNum, 1);
         name = array.getString(R.styleable.GridView_name);
 
-        Log.v(String.format("mNumColumns = %d , initNum = %d , name = %s", mNumColumns, initNum, name));
+        Log.d(String.format("mNumColumns = %d , initNum = %d ", mNumColumns, initNum));
+        Log.v(String.format(" name = %s", name));
 
         paddingLeft = getPaddingLeft();
         paddingRight = getPaddingRight();

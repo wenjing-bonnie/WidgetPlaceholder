@@ -1,7 +1,5 @@
 package com.android.widgetplaceholder.utils;
 
-import android.text.TextUtils;
-
 /**
  * Created by wenjing.liu on 2020/10/10 .
  *

@@ -2,6 +2,7 @@ package com.android.widgetplaceholder;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -74,6 +75,19 @@ public class PlaceHolderView extends View {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         Log.v("onAttachedToWindow");
+    }
+
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Log.v("onSaveInstanceState");
+        return super.onSaveInstanceState();
+    }
+
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        super.onWindowVisibilityChanged(visibility);
+        Log.v("onWindowVisibilityChanged = " + visibility);
     }
 
     /**
