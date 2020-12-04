@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--优先级为4/5的情况：在Theme中不定义defStyleAttr属性定义name属性，默认的会使用在控件中定义的defStyleRes中属性-->
-    <com.android.widgetplaceholder.GridView
+    <com.android.widgetplaceholder.grid.GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="50px"

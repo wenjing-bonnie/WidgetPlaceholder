@@ -1,8 +1,10 @@
-package com.android.widgetplaceholder;
+package com.android.widgetplaceholder.grid;
 
 import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
+
+import com.android.widgetplaceholder.R;
 
 /**
  * Created by wenjing.liu on 2020/10/19 in J1.
