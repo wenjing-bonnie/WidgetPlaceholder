@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.attrsetting.GridViewAttrSettingActivity;
+import com.android.placeholder.PlaceHolderActivity;
 import com.android.viewlife.ViewLifeCycleActivity;
 
 public class MainActivity extends Activity {
@@ -25,6 +26,10 @@ public class MainActivity extends Activity {
 
     public void goGridViewAttrSettingActivity(View view) {
         startActivity(GridViewAttrSettingActivity.class);
+    }
+
+    public void goPlaceHolderActivity(View view) {
+        startActivity(PlaceHolderActivity.class);
     }
 
 

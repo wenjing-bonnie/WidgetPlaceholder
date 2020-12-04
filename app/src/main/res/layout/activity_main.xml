@@ -19,5 +19,12 @@
         android:onClick="goGridViewAttrSettingActivity"
         android:text="属性设置的优先级" />
 
+    <!--用来测试预占位-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="goPlaceHolderActivity"
+        android:text="预占位UI" />
+
 
 </LinearLayout>
