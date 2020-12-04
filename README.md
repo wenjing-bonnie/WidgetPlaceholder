@@ -41,3 +41,5 @@
 参照博客https://blog.csdn.net/nihaomabmt/article/details/109668801
 ## 四  View属性设置优先级的一点总结
 参照博客https://blog.csdn.net/nihaomabmt/article/details/109800839
+
+## 五 预占位UI代码在逐步增加中，功能还未实现

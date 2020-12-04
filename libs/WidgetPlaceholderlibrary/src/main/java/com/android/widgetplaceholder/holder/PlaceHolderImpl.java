@@ -2,6 +2,8 @@ package com.android.widgetplaceholder.holder;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,9 @@ public class PlaceHolderImpl {
         childBgParams = new HashMap<>();
     }
 
+    /**
+     * 开始循环遍历布局文件中的所有的子View
+     */
     protected void startPlaceHolderChild() {
         ViewGroup content = activity.findViewById(android.R.id.content);
         startPlaceHolderChild(content);
@@ -48,6 +53,11 @@ public class PlaceHolderImpl {
         }
     }
 
+    /**
+     * 保存控件的原布局参数，然后更新UI
+     *
+     * @param child
+     */
     private void placeHolderView(View child) {
         Log.d("id = " + child.getId() + " , child = " + child);
         if (child instanceof TextView
@@ -60,20 +70,22 @@ public class PlaceHolderImpl {
         }
     }
 
-
+    /**
+     * 还原
+     */
     protected void stopPlaceHolderView() {
         restorePlaceHolderView();
     }
 
-
     private void restorePlaceHolderView() {
-
         if (childBgParams == null || childBgParams.isEmpty()) {
             return;
         }
         Log.d("Restore place holder view count is " + childBgParams.size());
         for (View child : childBgParams.keySet()) {
             Log.d("This child is " + child.getClass().getSimpleName());
+            Drawable bg = childBgParams.get(child).bgDrawable;
+            Log.v("This child background is " + bg);
             child.setBackground(childBgParams.get(child).bgDrawable);
         }
         childBgParams.clear();
