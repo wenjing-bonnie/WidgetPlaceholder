@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +18,9 @@ import com.android.widgetplaceholder.holder.PlaceHolder;
 public class PlaceHolderActivity extends SubActivity {
     PlaceHolder placeHolder;
     private TextView tvResetBg;
+    private TextView tvTestCode;
+    private Button btnTestCode;
+    private ImageView ivTestCode;
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -31,6 +36,20 @@ public class PlaceHolderActivity extends SubActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_holder);
         tvResetBg = findViewById(R.id.tv_test_reset_bg);
+        tvTestCode = findViewById(R.id.tv_test_code);
+        btnTestCode = findViewById(R.id.btn_test_code);
+        ivTestCode = findViewById(R.id.iv_test_code);
+
+        tvTestCode.setBackgroundColor(Color.RED);
+        btnTestCode.setBackgroundResource(R.drawable.ic_launcher);
+        ivTestCode.setBackground(getDrawable(R.drawable.bg));
+        ivTestCode.setImageResource(R.drawable.ic_launcher);
+
+        startPlaceHolder();
+    }
+
+
+    private void startPlaceHolder() {
         placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
                 .setPlaceHolderBackgroundColor(Color.YELLOW)
                 .build();

@@ -107,17 +107,17 @@ public class PlaceHolderImpl {
         buffer.srcDrawable = child.getDrawable();
         childBgParams.put(child, buffer);
         ViewGroup.LayoutParams params = child.getLayoutParams();
-        Log.d("width = " + buffer.srcDrawable.getIntrinsicWidth() + " , height = " + buffer.srcDrawable.getIntrinsicHeight());
-        Log.d("width = " + params.width + " , height = " + params.height);
-        Log.d("width = " + child.getMeasuredWidth() + " , height = " + child.getMeasuredHeight());
+//         Log.d("width = " + buffer.srcDrawable.getIntrinsicWidth() + " , height = " + buffer.srcDrawable.getIntrinsicHeight());
+//         Log.d("width = " + params.width + " , height = " + params.height);
+//         Log.d("width = " + child.getMeasuredWidth() + " , height = " + child.getMeasuredHeight());
 
         //重新设置
-        if (params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
-            params.width = buffer.srcDrawable.getIntrinsicWidth();
-        }
-        if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
-            params.height = buffer.srcDrawable.getIntrinsicHeight();
-        }
+//        if (params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+//            params.width = buffer.srcDrawable.getIntrinsicWidth();
+//        }
+//        if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
+//            params.height = buffer.srcDrawable.getIntrinsicHeight();
+//        }
         //TODO 如果ImageView去掉src之后，而ImageView设置的wrap_content的区域怎么办
         //child.setLayoutParams(params);
         child.setImageDrawable(null);
