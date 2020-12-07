@@ -18,10 +18,11 @@ import java.util.Map;
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  *
+ *
  * @author wenjing.liu
  */
 public class PlaceHolderImpl {
-    private static final String DEFULT_BLACKGROUND = "#dddddd";
+    private static final String DEFAULT_BACKGROUND = "#dddddd";
     private Activity activity;
     private Map<View, PlaceHolderBuffer> childBgParams;
     private PlaceHolderParameter param;
@@ -70,7 +71,7 @@ public class PlaceHolderImpl {
             buffer.bgDrawable = child.getBackground();
             childBgParams.put(child, buffer);
             Drawable bg = param.settingBackgroundDrawable;
-            child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFULT_BLACKGROUND)) : param.settingBackgroundDrawable);
+            child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : param.settingBackgroundDrawable);
         }
     }
 
