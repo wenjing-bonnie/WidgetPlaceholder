@@ -10,6 +10,7 @@ import androidx.annotation.DrawableRes;
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  *
+ * 逻辑配置
  * @author wenjing.liu
  */
 public class PlaceHolder {
