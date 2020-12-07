@@ -1,6 +1,13 @@
 package com.android.placeholder;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
@@ -8,12 +15,25 @@ import com.android.widgetplaceholder.holder.PlaceHolder;
 
 public class PlaceHolderActivity extends SubActivity {
     PlaceHolder placeHolder;
+    private TextView tvResetBg;
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            placeHolder.stopPlaceHolderChild();
+            //tvResetBg.setBackgroundResource(R.drawable.ic_launcher_foreground);
+            tvResetBg.setBackgroundColor(Color.GREEN);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_holder);
-        placeHolder = new PlaceHolder(PlaceHolderActivity.this);
+        tvResetBg = findViewById(R.id.tv_test_reset_bg);
+        placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
+                .setPlaceHolderBackgroundColor(Color.YELLOW)
+                .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();
     }
@@ -27,7 +47,9 @@ public class PlaceHolderActivity extends SubActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                placeHolder.stopPlaceHolderChild();
+                Message msg = new Message();
+                handler.sendMessageAtTime(msg, 0);
+
             }
         }.start();
     }

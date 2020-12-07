@@ -21,11 +21,14 @@ import java.util.Map;
  * @author wenjing.liu
  */
 public class PlaceHolderImpl {
+    private static final String DEFULT_BLACKGROUND = "#dddddd";
     private Activity activity;
-    private Map<View, PlaceHolderParameter> childBgParams;
+    private Map<View, PlaceHolderBuffer> childBgParams;
+    private PlaceHolderParameter param;
 
-    protected PlaceHolderImpl(Activity activity) {
+    protected PlaceHolderImpl(Activity activity, PlaceHolderParameter param) {
         this.activity = activity;
+        this.param = param;
         childBgParams = new HashMap<>();
     }
 
@@ -63,10 +66,11 @@ public class PlaceHolderImpl {
         if (child instanceof TextView
                 || child instanceof ImageView
                 || child instanceof Button) {
-            PlaceHolderParameter param = new PlaceHolderParameter();
-            param.bgDrawable = child.getBackground();
-            childBgParams.put(child, param);
-            child.setBackgroundColor(Color.GRAY);
+            PlaceHolderBuffer buffer = new PlaceHolderBuffer();
+            buffer.bgDrawable = child.getBackground();
+            childBgParams.put(child, buffer);
+            Drawable bg = param.settingBackgroundDrawable;
+            child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFULT_BLACKGROUND)) : param.settingBackgroundDrawable);
         }
     }
 
@@ -84,10 +88,9 @@ public class PlaceHolderImpl {
         Log.d("Restore place holder view count is " + childBgParams.size());
         for (View child : childBgParams.keySet()) {
             Log.d("This child is " + child.getClass().getSimpleName());
-            Drawable bg = childBgParams.get(child).bgDrawable;
-            Log.v("This child background is " + bg);
             child.setBackground(childBgParams.get(child).bgDrawable);
         }
+
         childBgParams.clear();
     }
 }

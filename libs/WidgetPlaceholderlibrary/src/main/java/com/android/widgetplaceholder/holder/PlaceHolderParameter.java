@@ -8,6 +8,13 @@ import android.graphics.drawable.Drawable;
  * @author wenjing.liu
  */
 public class PlaceHolderParameter {
+    /**
+     * 设置的背景图片
+     */
+    protected Drawable settingBackgroundDrawable;
 
-    protected Drawable bgDrawable;
+    /**
+     * 未代替之前的样式
+     */
+    //protected PlaceHolderBuffer buffer;
 }
