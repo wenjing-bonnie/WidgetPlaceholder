@@ -1,5 +1,6 @@
 package com.android.widgetplaceholder.holder;
 
+import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -10,7 +11,19 @@ import android.graphics.drawable.Drawable;
  * @author wenjing.liu
  */
 public class PlaceHolderBuffer {
-
+    /**
+     * 原控件的背景色
+     */
     protected Drawable bgDrawable;
+    /**
+     * 原控件的文字颜色
+     */
+
+    protected ColorStateList textColor;
+    /**
+     * 原控件的图片资源
+     */
+
+    protected Drawable srcDrawable;
 
 }

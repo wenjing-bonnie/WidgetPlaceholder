@@ -67,12 +67,72 @@ public class PlaceHolderImpl {
         if (child instanceof TextView
                 || child instanceof ImageView
                 || child instanceof Button) {
-            PlaceHolderBuffer buffer = new PlaceHolderBuffer();
-            buffer.bgDrawable = child.getBackground();
-            childBgParams.put(child, buffer);
-            Drawable bg = param.settingBackgroundDrawable;
-            child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : param.settingBackgroundDrawable);
+
+
         }
+
+        if (child instanceof TextView) {
+            //Button extends TextView
+            placeHolderTextViewIncludeButton((TextView) child);
+        } else if (child instanceof ImageView) {
+            placeHolderImageView((ImageView) child);
+        }
+    }
+
+    /**
+     * TextView/Button控件的处理
+     *
+     * @param child
+     */
+    private void placeHolderTextViewIncludeButton(TextView child) {
+        //保存之前的信息
+        PlaceHolderBuffer buffer = new PlaceHolderBuffer();
+        buffer.bgDrawable = child.getBackground();
+        buffer.textColor = child.getTextColors();
+        childBgParams.put(child, buffer);
+        //重新设置
+        child.setTextColor(Color.TRANSPARENT);
+        setChildBackground(child);
+    }
+
+    /**
+     * ImageViewView控件的处理
+     *
+     * @param child
+     */
+    private void placeHolderImageView(ImageView child) {
+        //保存之前的信息
+        PlaceHolderBuffer buffer = new PlaceHolderBuffer();
+        buffer.bgDrawable = child.getBackground();
+        buffer.srcDrawable = child.getDrawable();
+        childBgParams.put(child, buffer);
+        ViewGroup.LayoutParams params = child.getLayoutParams();
+        Log.d("width = " + buffer.srcDrawable.getIntrinsicWidth() + " , height = " + buffer.srcDrawable.getIntrinsicHeight());
+        Log.d("width = " + params.width + " , height = " + params.height);
+        Log.d("width = " + child.getMeasuredWidth() + " , height = " + child.getMeasuredHeight());
+
+        //重新设置
+        if (params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            params.width = buffer.srcDrawable.getIntrinsicWidth();
+        }
+        if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
+            params.height = buffer.srcDrawable.getIntrinsicHeight();
+        }
+        //TODO 如果ImageView去掉src之后，而ImageView设置的wrap_content的区域怎么办
+        //child.setLayoutParams(params);
+        child.setImageDrawable(null);
+        setChildBackground(child);
+    }
+
+
+    /**
+     * 设置placeholder的背景
+     *
+     * @param child
+     */
+    private void setChildBackground(View child) {
+        Drawable bg = param.settingBackgroundDrawable;
+        child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : param.settingBackgroundDrawable);
     }
 
     /**
@@ -82,6 +142,9 @@ public class PlaceHolderImpl {
         restorePlaceHolderView();
     }
 
+    /**
+     * 还原之前保存的内容
+     */
     private void restorePlaceHolderView() {
         if (childBgParams == null || childBgParams.isEmpty()) {
             return;
@@ -89,9 +152,24 @@ public class PlaceHolderImpl {
         Log.d("Restore place holder view count is " + childBgParams.size());
         for (View child : childBgParams.keySet()) {
             Log.d("This child is " + child.getClass().getSimpleName());
-            child.setBackground(childBgParams.get(child).bgDrawable);
+            if (child instanceof TextView) {
+                restorePlaceHolderTextViewIncludeButton((TextView) child, childBgParams.get(child));
+            } else if (child instanceof ImageView) {
+                restorePlaceHolderImageView((ImageView) child, childBgParams.get(child));
+            }
         }
 
         childBgParams.clear();
+    }
+
+
+    private void restorePlaceHolderTextViewIncludeButton(TextView child, PlaceHolderBuffer buffer) {
+        child.setTextColor(buffer.textColor);
+        child.setBackground(buffer.bgDrawable);
+    }
+
+    private void restorePlaceHolderImageView(ImageView child, PlaceHolderBuffer buffer) {
+        child.setImageDrawable(buffer.srcDrawable);
+        child.setBackground(buffer.bgDrawable);
     }
 }
