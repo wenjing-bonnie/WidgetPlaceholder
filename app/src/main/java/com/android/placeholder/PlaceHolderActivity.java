@@ -52,6 +52,8 @@ public class PlaceHolderActivity extends SubActivity {
     private void startPlaceHolder() {
         placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
                 .setPlaceHolderBackgroundColor(Color.YELLOW)
+                //.setPlaceHolderBackgroundResource(R.drawable.bg)
+                .setPlaceHolderCorner(Color.RED, 20)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();

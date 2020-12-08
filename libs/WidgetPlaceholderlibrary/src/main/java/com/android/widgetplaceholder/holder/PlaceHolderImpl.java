@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -131,8 +132,15 @@ public class PlaceHolderImpl {
      * @param child
      */
     private void setChildBackground(View child) {
+        if (param.cornerRadius > 0) {
+            GradientDrawable cornerBackground = new GradientDrawable();
+            cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : Color.parseColor(DEFAULT_BACKGROUND));
+            cornerBackground.setCornerRadius(param.cornerRadius);
+            child.setBackground(cornerBackground);
+            return;
+        }
         Drawable bg = param.settingBackgroundDrawable;
-        child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : param.settingBackgroundDrawable);
+        child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : bg);
     }
 
     /**

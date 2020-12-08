@@ -9,8 +9,9 @@ import androidx.annotation.DrawableRes;
 
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
- *
+ * <p>
  * 逻辑配置
+ *
  * @author wenjing.liu
  */
 public class PlaceHolder {
@@ -76,13 +77,14 @@ public class PlaceHolder {
         /**
          * 可以设置背景的corner
          *
-         * @param left
-         * @param top
-         * @param right
-         * @param bottom
+         * @param color
+         * @param corner
          * @return
          */
-        public Builder setPlaceHolderCorner(int left, int top, int right, int bottom) {
+        public Builder setPlaceHolderCorner(@ColorInt int color, int corner) {
+            parameter.settingBackgroundDrawable = null;
+            parameter.settingCornerBackgroundColor = color;
+            parameter.cornerRadius = corner;
             return this;
         }
 

@@ -2,6 +2,8 @@ package com.android.widgetplaceholder.holder;
 
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.ColorInt;
+
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  * <p>
@@ -16,7 +18,9 @@ public class PlaceHolderParameter {
     protected Drawable settingBackgroundDrawable;
 
     /**
-     * 未代替之前的样式
+     * 设备背景的圆角,如果设置圆角，只能设置颜色，其他Drawable类型不支持
      */
-    //protected PlaceHolderBuffer buffer;
+    protected @ColorInt
+    int settingCornerBackgroundColor;
+    protected int cornerRadius;
 }
