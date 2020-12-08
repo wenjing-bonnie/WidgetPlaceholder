@@ -81,7 +81,7 @@ public class PlaceHolder {
          * @param corner
          * @return
          */
-        public Builder setPlaceHolderCorner(@ColorInt int color, int corner) {
+        public Builder setPlaceHolderBackgroundCorner(@ColorInt int color, int corner) {
             parameter.settingBackgroundDrawable = null;
             parameter.settingCornerBackgroundColor = color;
             parameter.cornerRadius = corner;
