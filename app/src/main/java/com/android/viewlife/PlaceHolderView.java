@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder;
+package com.android.viewlife;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -120,9 +120,9 @@ public class PlaceHolderView extends View {
         //UNSPECIFIED：wrap_content，那么控件就设置为默认的大小
         //同样的方式获取height
         //3.设置该View的width和height
-        int measureWidth = 0;
-        int measureHeight = 0;
-        setMeasuredDimension(measureWidth, measureHeight);
+        //int measureWidth = 0;
+        //int measureHeight = 0;
+        //setMeasuredDimension(measureWidth, measureHeight);
 
     }
 

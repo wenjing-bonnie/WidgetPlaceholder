@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <!--优先级为1的情况：在布局文件中定义name属性-->
-        <com.android.widgetplaceholder.grid.GridView
+        <com.android.attrsetting.grid.GridView
             android:id="@+id/gv_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
             psv:name="直接定义在布局文件中 设置的名字 优先级为1"
             psv:verticalSpacing="50px" />
         <!--优先级为2的情况：在布局文件的style属性中定义name属性-->
-        <com.android.widgetplaceholder.grid.GridView
+        <com.android.attrsetting.grid.GridView
             android:id="@+id/gv_test111"
             style="@style/GridViewInLayout"
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             psv:verticalSpacing="50px" />
 
         <!--优先级为3的情况：在Theme中通过defStyleAttr属性定义name属性，在控件中使用android:theme不起作用-->
-        <com.android.widgetplaceholder.grid.GridView
+        <com.android.attrsetting.grid.GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="50px"
@@ -39,7 +39,7 @@
             psv:verticalSpacing="50px" />
 
         <!--优先级为4的情况：在Theme中通过defStyleAttr属性定义name属性-->
-        <com.android.widgetplaceholder.grid.GridView
+        <com.android.attrsetting.grid.GridView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="50px"

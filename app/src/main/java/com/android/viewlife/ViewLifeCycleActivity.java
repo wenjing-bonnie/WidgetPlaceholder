@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.base.SubActivity;
-import com.android.widgetplaceholder.PlaceHolderView;
 import com.android.widgetplaceholder.R;
 import com.android.widgetplaceholder.utils.Log;
 

@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.grid;
+package com.android.attrsetting.grid;
 
 import android.content.Context;
 import android.net.Uri;
