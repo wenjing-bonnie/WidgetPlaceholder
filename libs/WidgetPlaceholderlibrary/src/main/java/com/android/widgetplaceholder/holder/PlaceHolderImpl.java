@@ -65,12 +65,6 @@ public class PlaceHolderImpl {
      */
     private void placeHolderView(View child) {
         Log.d("id = " + child.getId() + " , child = " + child);
-        if (child instanceof TextView
-                || child instanceof ImageView
-                || child instanceof Button) {
-
-
-        }
 
         if (child instanceof TextView) {
             //Button extends TextView
