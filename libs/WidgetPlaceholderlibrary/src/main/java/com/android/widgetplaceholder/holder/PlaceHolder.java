@@ -11,6 +11,17 @@ import androidx.annotation.DrawableRes;
  * Created by wenjing.liu on 2020/12/4 in J1.
  * <p>
  * 逻辑配置
+ * 1.实例化placeHolder
+ *      placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
+ *        //设置为非圆角
+ *       //.setPlaceHolderBackgroundColor(Color.YELLOW)
+ *       //.setPlaceHolderBackgroundResource(R.drawable.bg)
+ *       //可以设置圆角的
+ *        .setPlaceHolderBackgroundCorner(Color.RED, 20)
+ *        .build();
+ * 2.在setContentView()之后,需要预占位的控件完全设置完背景之后
+ *      placeHolder.startPlaceHolderChild();
+ * 3.在完成之后,调用placeHolder.stopPlaceHolderChild();来释放预占位的UI
  *
  * @author wenjing.liu
  */
