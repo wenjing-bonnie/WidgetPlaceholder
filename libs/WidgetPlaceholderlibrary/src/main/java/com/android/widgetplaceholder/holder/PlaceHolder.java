@@ -3,24 +3,27 @@ package com.android.widgetplaceholder.holder;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
 
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  * <p>
  * 逻辑配置
  * 1.实例化placeHolder
- *      placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
- *        //设置为非圆角
- *       //.setPlaceHolderBackgroundColor(Color.YELLOW)
- *       //.setPlaceHolderBackgroundResource(R.drawable.bg)
- *       //可以设置圆角的
- *        .setPlaceHolderBackgroundCorner(Color.RED, 20)
- *        .build();
+ * placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
+ * //设置为非圆角
+ * //.setPlaceHolderBackgroundColor(Color.YELLOW)
+ * //.setPlaceHolderBackgroundResource(R.drawable.bg)
+ * //可以设置圆角的
+ * .setPlaceHolderBackgroundCorner(Color.RED, 20)
+ * .build();
  * 2.在setContentView()之后,需要预占位的控件完全设置完背景之后
- *      placeHolder.startPlaceHolderChild();
+ * placeHolder.startPlaceHolderChild();
  * 3.在完成之后,调用placeHolder.stopPlaceHolderChild();来释放预占位的UI
  *
  * @author wenjing.liu
@@ -96,6 +99,46 @@ public class PlaceHolder {
             parameter.settingBackgroundDrawable = null;
             parameter.settingCornerBackgroundColor = color;
             parameter.cornerRadius = corner;
+            return this;
+        }
+
+        /**
+         * 去除不需要考虑预占位的ViewGroup
+         *
+         * @param rootGroup 不需要考虑预占位的ViewGroup
+         * @return
+         */
+        public Builder withoutPlaceHolder(ViewGroup rootGroup) {
+            return this;
+        }
+
+        /**
+         * 去除不需要考虑预占位的ViewGroup
+         *
+         * @param childId 不需要考虑预占位的child的id的集合
+         * @return
+         */
+        public Builder withoutPlaceHolder(@IdRes int... childId) {
+            return this;
+        }
+
+        /**
+         * 去除不需要考虑预占位的ViewGroup
+         *
+         * @param child 不需要考虑预占位的child的集合
+         * @return
+         */
+        public Builder withoutPlaceHolder(View... child) {
+            return this;
+        }
+
+        /**
+         * 去除不需要考虑预占位的ViewGroup
+         *
+         * @param rootGroupId 不需要考虑预占位的ViewGroup的resourceId
+         * @return
+         */
+        public Builder withoutPlaceHolder(@IdRes int rootGroupId) {
             return this;
         }
 

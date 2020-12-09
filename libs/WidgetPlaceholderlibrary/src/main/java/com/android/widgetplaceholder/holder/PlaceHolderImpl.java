@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.widgetplaceholder.utils.Log;
@@ -35,14 +36,19 @@ public class PlaceHolderImpl {
     }
 
     /**
-     * 开始循环遍历布局文件中的所有的子View
+     * 开始循环遍历布局文件中的所有的子View,应用于Activity/Fragment
      */
     protected void startPlaceHolderChild() {
         ViewGroup content = activity.findViewById(android.R.id.content);
         startPlaceHolderChild(content);
     }
 
-    private void startPlaceHolderChild(View viewGroup) {
+    /**
+     * 开始循环遍历给定的ViewGroup上的子View,应用于ListView等
+     *
+     * @param viewGroup
+     */
+    protected void startPlaceHolderChild(View viewGroup) {
         if (viewGroup instanceof ViewGroup) {
             int count = ((ViewGroup) viewGroup).getChildCount();
             for (int i = 0; i < count; i++) {
