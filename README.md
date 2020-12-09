@@ -1,6 +1,8 @@
 # AndroidUI的占位符控件（功能在增加中，还未实现）
 该控件是作用：在加载UI的时候，预占位。从这个控件中去总结下View的生命周期以及在自定义View时需要注意的地方。
 
+功能还在验证中！！！！
+
 ##  一  自定义View
 因为这里编辑不是很方便，专门在cdsn下面专门写了一个博文
 参照博客https://blog.csdn.net/nihaomabmt/article/details/109668801
