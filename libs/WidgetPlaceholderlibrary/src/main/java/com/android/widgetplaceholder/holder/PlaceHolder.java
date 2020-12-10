@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
@@ -53,6 +52,17 @@ public class PlaceHolder {
         public Builder(Activity activity) {
             this.activity = activity;
             parameter = new PlaceHolderParameter();
+        }
+
+        /**
+         * 设置预加载UI不起作用，默认的为true
+         *
+         * @param isEnable true:起作用；false:不起作用
+         * @return
+         */
+        public Builder setPlaceHolderDisEnable(boolean isEnable) {
+            parameter.isDisEnable = isEnable;
+            return this;
         }
 
         /**
@@ -105,20 +115,11 @@ public class PlaceHolder {
         /**
          * 去除不需要考虑预占位的ViewGroup
          *
-         * @param rootGroup 不需要考虑预占位的ViewGroup
+         * @param withoutChildId 不需要考虑预占位的child的id的集合
          * @return
          */
-        public Builder withoutPlaceHolder(ViewGroup rootGroup) {
-            return this;
-        }
-
-        /**
-         * 去除不需要考虑预占位的ViewGroup
-         *
-         * @param childId 不需要考虑预占位的child的id的集合
-         * @return
-         */
-        public Builder withoutPlaceHolder(@IdRes int... childId) {
+        public Builder withoutPlaceHolder(@IdRes int... withoutChildId) {
+            parameter.withoutChildIds = withoutChildId;
             return this;
         }
 
@@ -129,19 +130,9 @@ public class PlaceHolder {
          * @return
          */
         public Builder withoutPlaceHolder(View... child) {
+            parameter.withoutChildes = child;
             return this;
         }
-
-        /**
-         * 去除不需要考虑预占位的ViewGroup
-         *
-         * @param rootGroupId 不需要考虑预占位的ViewGroup的resourceId
-         * @return
-         */
-        public Builder withoutPlaceHolder(@IdRes int rootGroupId) {
-            return this;
-        }
-
 
         public PlaceHolder build() {
             holder = new PlaceHolder(activity, parameter);

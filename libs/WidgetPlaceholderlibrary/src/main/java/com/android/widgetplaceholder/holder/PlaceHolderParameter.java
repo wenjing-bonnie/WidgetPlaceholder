@@ -1,6 +1,8 @@
 package com.android.widgetplaceholder.holder;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
 
@@ -13,6 +15,11 @@ import androidx.annotation.ColorInt;
  */
 public class PlaceHolderParameter {
     /**
+     * 设置该功能不起作用
+     * 如果在全局应用该功能的化，有可能有些特殊页面不需要使用该功能，所以增加一个选项来关闭该功能
+     */
+    protected boolean isDisEnable = false;
+    /**
      * 设置的背景图片
      */
     protected Drawable settingBackgroundDrawable;
@@ -23,4 +30,9 @@ public class PlaceHolderParameter {
     protected @ColorInt
     int settingCornerBackgroundColor;
     protected int cornerRadius;
+    /**
+     * 不需要设置预背景的控件
+     */
+    protected int[] withoutChildIds;
+    protected View[] withoutChildes;
 }

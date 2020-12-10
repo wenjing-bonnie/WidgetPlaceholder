@@ -56,6 +56,9 @@ public class PlaceHolderActivity extends SubActivity {
                 //.setPlaceHolderBackgroundResource(R.drawable.bg)
                 //可以设置圆角的
                 .setPlaceHolderBackgroundCorner(Color.RED, 20)
+                .withoutPlaceHolder(tvResetBg)
+                .withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
+                .setPlaceHolderDisEnable(true)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();

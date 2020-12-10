@@ -7,9 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.widgetplaceholder.utils.Log;
@@ -49,6 +47,11 @@ public class PlaceHolderImpl {
      * @param viewGroup
      */
     protected void startPlaceHolderChild(View viewGroup) {
+        //有设置不需要预加载UI的View
+        if (isWithoutPlaceHolderView(viewGroup)
+                || isWithoutPlaceHolderView(viewGroup.getId())) {
+            return;
+        }
         if (viewGroup instanceof ViewGroup) {
             int count = ((ViewGroup) viewGroup).getChildCount();
             for (int i = 0; i < count; i++) {
@@ -65,13 +68,59 @@ public class PlaceHolderImpl {
     }
 
     /**
+     * 是否为不需要设置预占位的View
+     *
+     * @param child
+     * @return
+     */
+    private boolean isWithoutPlaceHolderView(View child) {
+        if (this.param.isDisEnable) {
+            return true;
+        }
+        if (this.param.withoutChildes == null || this.param.withoutChildes.length == 0) {
+            return false;
+        }
+        for (View view : this.param.withoutChildes) {
+            if (view == child) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 是否该View为不需要设置预占位
+     *
+     * @param childId
+     * @return true：为不需要设置；false为需要
+     */
+    private boolean isWithoutPlaceHolderView(int childId) {
+        if (this.param.isDisEnable) {
+            return true;
+        }
+        if (this.param.withoutChildIds == null || this.param.withoutChildIds.length == 0) {
+            return false;
+        }
+        for (int id : this.param.withoutChildIds) {
+            if (childId == id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * 保存控件的原布局参数，然后更新UI
      *
      * @param child
      */
     private void placeHolderView(View child) {
         Log.d("id = " + child.getId() + " , child = " + child);
-
+        //有设置不需要预加载UI的View
+        if (isWithoutPlaceHolderView(child)
+                || isWithoutPlaceHolderView(child.getId())) {
+            return;
+        }
         if (child instanceof TextView) {
             //Button extends TextView
             placeHolderTextViewIncludeButton((TextView) child);
