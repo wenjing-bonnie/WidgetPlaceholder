@@ -186,7 +186,7 @@ public class PlaceHolderImpl {
     /**
      * 设置placeholder的背景
      * 优先使用设置settingBackgroundDrawable/settingCornerBackgroundColor
-     * 若没有设置，则使用文字默认的字体颜色>字体的背景色>DEFAULT_BACKGROUND。但是黑色除外
+     * 若没有设置，则使用文字默认的字体颜色>字体的背景色>DEFAULT_BACKGROUND,并且在上面增加一个透明度，防止字体颜色是黑色系的时候，显示的太难看
      *
      * @param child
      */
