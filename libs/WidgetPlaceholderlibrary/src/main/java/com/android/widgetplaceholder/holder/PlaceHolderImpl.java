@@ -194,13 +194,13 @@ public class PlaceHolderImpl {
         if (param.cornerRadius > 0) {
             GradientDrawable cornerBackground = new GradientDrawable();
             cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : getTextViewDefaultBackground(child));
-            cornerBackground.setAlpha(70);
+            cornerBackground.setAlpha(50);
             cornerBackground.setCornerRadius(param.cornerRadius);
             child.setBackground(cornerBackground);
             return;
         }
         Drawable bg = param.settingBackgroundDrawable;
-        child.setAlpha(0.7f);
+        child.setAlpha(0.5f);
         child.setBackground(bg == null ? new ColorDrawable(getTextViewDefaultBackground(child)) : bg);
     }
 
