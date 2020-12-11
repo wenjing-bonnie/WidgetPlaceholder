@@ -1,6 +1,7 @@
 package com.android.widgetplaceholder.holder;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -9,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
 
 import com.android.widgetplaceholder.utils.Log;
 
@@ -37,6 +41,10 @@ public class PlaceHolderImpl {
      * 开始循环遍历布局文件中的所有的子View,应用于Activity/Fragment
      */
     protected void startPlaceHolderChild() {
+        //如果不需要使用预占位UI，则直接返回
+        if (this.param.isDisEnable) {
+            return;
+        }
         ViewGroup content = activity.findViewById(android.R.id.content);
         startPlaceHolderChild(content);
     }
@@ -141,8 +149,8 @@ public class PlaceHolderImpl {
         buffer.textColor = child.getTextColors();
         childBgParams.put(child, buffer);
         //重新设置
-        child.setTextColor(Color.TRANSPARENT);
         setChildBackground(child);
+        child.setTextColor(Color.TRANSPARENT);
     }
 
     /**
@@ -170,26 +178,58 @@ public class PlaceHolderImpl {
 //        }
         //TODO 如果ImageView去掉src之后，而ImageView设置的wrap_content的区域怎么办
         //child.setLayoutParams(params);
-        child.setImageDrawable(null);
         setChildBackground(child);
+        child.setImageDrawable(null);
     }
 
 
     /**
      * 设置placeholder的背景
+     * 优先使用设置settingBackgroundDrawable/settingCornerBackgroundColor
+     * 若没有设置，则使用文字默认的字体颜色>字体的背景色>DEFAULT_BACKGROUND。但是黑色除外
      *
      * @param child
      */
     private void setChildBackground(View child) {
         if (param.cornerRadius > 0) {
             GradientDrawable cornerBackground = new GradientDrawable();
-            cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : Color.parseColor(DEFAULT_BACKGROUND));
+            cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : getTextViewDefaultBackground(child));
+            cornerBackground.setAlpha(70);
             cornerBackground.setCornerRadius(param.cornerRadius);
             child.setBackground(cornerBackground);
             return;
         }
         Drawable bg = param.settingBackgroundDrawable;
-        child.setBackground(bg == null ? new ColorDrawable(Color.parseColor(DEFAULT_BACKGROUND)) : bg);
+        child.setAlpha(0.7f);
+        child.setBackground(bg == null ? new ColorDrawable(getTextViewDefaultBackground(child)) : bg);
+    }
+
+
+    /**
+     * 根据字体的颜色或color背景设置TextView的预占位的背景色
+     *
+     * @param view
+     * @return
+     */
+    private @ColorInt
+    int getTextViewDefaultBackground(View view) {
+        int defaultColor = Color.parseColor(DEFAULT_BACKGROUND);
+        if (!(view instanceof TextView)) {
+            return defaultColor;
+        }
+        TextView child = (TextView) view;
+        int setColor = child.getCurrentTextColor();
+        if (setColor != 0) {
+            return setColor;
+        }
+        Drawable textBackground = child.getBackground();
+        if (textBackground == null || !(textBackground instanceof ColorDrawable)) {
+            return defaultColor;
+        }
+        if (textBackground instanceof ColorDrawable) {
+            return ((ColorDrawable) textBackground).getColor();
+        }
+        return defaultColor;
     }
 
     /**

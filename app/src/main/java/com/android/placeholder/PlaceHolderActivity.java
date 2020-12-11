@@ -27,7 +27,7 @@ public class PlaceHolderActivity extends SubActivity {
             super.handleMessage(msg);
             placeHolder.stopPlaceHolderChild();
             //tvResetBg.setBackgroundResource(R.drawable.ic_launcher_foreground);
-            tvResetBg.setBackgroundColor(Color.GREEN);
+           // tvResetBg.setBackgroundColor(Color.GREEN);
         }
     };
 
@@ -36,6 +36,7 @@ public class PlaceHolderActivity extends SubActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_holder);
         tvResetBg = findViewById(R.id.tv_test_reset_bg);
+        //tvResetBg.setTextColor(Color.YELLOW);
         tvTestCode = findViewById(R.id.tv_test_code);
         btnTestCode = findViewById(R.id.btn_test_code);
         ivTestCode = findViewById(R.id.iv_test_code);
@@ -56,9 +57,10 @@ public class PlaceHolderActivity extends SubActivity {
                 //.setPlaceHolderBackgroundResource(R.drawable.bg)
                 //可以设置圆角的
                 .setPlaceHolderBackgroundCorner(Color.RED, 20)
-                .withoutPlaceHolder(tvResetBg)
-                .withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
-                .setPlaceHolderDisEnable(true)
+                .setPlaceHolderBackgroundCorner(20)
+                //.withoutPlaceHolder(tvResetBg)
+                //.withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
+                //.setPlaceHolderDisEnable(true)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();

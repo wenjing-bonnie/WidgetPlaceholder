@@ -18,14 +18,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="20px"
             android:background="@android:color/holo_red_light"
-            android:text="测试TextView测试TextView测试TextView测试TextView" />
+            android:text="测试TextView测试TextView测试TextView测试TextView"
+            android:textColor="@color/text_color" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20px"
             android:background="@android:color/holo_orange_light"
-            android:text="测试Button测试Button测试Button测试Button测试Button" />
+            android:text="测试Button测试Button测试Button测试Button测试Button"
+            android:textColor="@color/text_color"/>
 
         <ImageView
             android:layout_width="wrap_content"

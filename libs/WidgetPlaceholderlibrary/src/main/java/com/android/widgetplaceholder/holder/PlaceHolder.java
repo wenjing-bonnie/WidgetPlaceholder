@@ -113,6 +113,19 @@ public class PlaceHolder {
         }
 
         /**
+         * 可设置背景的corner，TextView默认的使用文字或color背景的颜色，ImageView默认的是#999999
+         *
+         * @param corner
+         * @return
+         */
+        public Builder setPlaceHolderBackgroundCorner(int corner) {
+            parameter.settingBackgroundDrawable = null;
+            parameter.settingCornerBackgroundColor = 0;
+            parameter.cornerRadius = corner;
+            return this;
+        }
+
+        /**
          * 去除不需要考虑预占位的ViewGroup
          *
          * @param withoutChildId 不需要考虑预占位的child的id的集合
