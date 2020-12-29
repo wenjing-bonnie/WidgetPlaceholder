@@ -15,6 +15,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 
 import com.android.widgetplaceholder.utils.Log;
+import com.android.widgetplaceholder.view.PlaceHolderAnimationBackground;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -191,12 +192,17 @@ public class PlaceHolderImpl {
      * @param child
      */
     private void setChildBackground(View child) {
-        if (param.cornerRadius > 0) {
-            GradientDrawable cornerBackground = new GradientDrawable();
+
+        //有圆角的背景 或 设置动画
+        if (param.cornerRadius > 0 || isSetAnimationStyle()) {
+            PlaceHolderAnimationBackground cornerBackground = new PlaceHolderAnimationBackground();
             cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : getTextViewDefaultBackground(child));
             cornerBackground.setAlpha(50);
             cornerBackground.setCornerRadius(param.cornerRadius);
             child.setBackground(cornerBackground);
+            if (isSetAnimationStyle()) {
+                startPlaceHolderAnimation(cornerBackground);
+            }
             return;
         }
         Drawable bg = param.settingBackgroundDrawable;
@@ -232,6 +238,7 @@ public class PlaceHolderImpl {
         return defaultColor;
     }
 
+
     /**
      * 还原
      */
@@ -259,14 +266,52 @@ public class PlaceHolderImpl {
         childBgParams.clear();
     }
 
-
+    /**
+     * 还原
+     *
+     * @param child
+     * @param buffer
+     */
     private void restorePlaceHolderTextViewIncludeButton(TextView child, PlaceHolderBuffer buffer) {
+        stopPlaceHolderAnimation(child);
         child.setTextColor(buffer.textColor);
+        child.setBackground(buffer.bgDrawable);
+
+    }
+
+    /**
+     * 还原
+     *
+     * @param child
+     * @param buffer
+     */
+    private void restorePlaceHolderImageView(ImageView child, PlaceHolderBuffer buffer) {
+        stopPlaceHolderAnimation(child);
+        child.setImageDrawable(buffer.srcDrawable);
         child.setBackground(buffer.bgDrawable);
     }
 
-    private void restorePlaceHolderImageView(ImageView child, PlaceHolderBuffer buffer) {
-        child.setImageDrawable(buffer.srcDrawable);
-        child.setBackground(buffer.bgDrawable);
+
+    private void startPlaceHolderAnimation(PlaceHolderAnimationBackground animationBackground) {
+        if (!isSetAnimationStyle()) {
+            return;
+        }
+        animationBackground.startAnimation();
+    }
+
+    private void stopPlaceHolderAnimation(View child) {
+        if (!isSetAnimationStyle()) {
+            return;
+        }
+        ((PlaceHolderAnimationBackground) child.getBackground()).clearAnimation();
+    }
+
+    /**
+     * 判断是否设置过动画
+     *
+     * @return
+     */
+    private boolean isSetAnimationStyle() {
+        return param != null && param.animationStyle > 0;
     }
 }

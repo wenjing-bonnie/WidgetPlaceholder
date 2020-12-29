@@ -1,7 +1,7 @@
 package com.android.widgetplaceholder.view;
 
 import android.graphics.Canvas;
-import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.GradientDrawable;
 
 /**
  * Created by wenjing.liu on 2020/12/7 in J1.
@@ -10,17 +10,24 @@ import android.graphics.drawable.ShapeDrawable;
  *
  * @author wenjing.liu
  */
-public class PlaceHolderAnimationBackground extends ShapeDrawable {
+public class PlaceHolderAnimationBackground extends GradientDrawable {
 
     public PlaceHolderAnimationBackground() {
 
     }
 
 
-
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
+    }
+
+
+    public void startAnimation() {
+
+    }
+
+    public void clearAnimation() {
     }
 }

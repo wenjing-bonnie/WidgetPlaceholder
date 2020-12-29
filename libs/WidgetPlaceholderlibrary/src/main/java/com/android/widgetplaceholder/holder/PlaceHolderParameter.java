@@ -35,4 +35,8 @@ public class PlaceHolderParameter {
      */
     protected int[] withoutChildIds;
     protected View[] withoutChildes;
+    /**
+     * 动画样式
+     */
+    protected int animationStyle;
 }

@@ -27,7 +27,7 @@ public class PlaceHolderActivity extends SubActivity {
             super.handleMessage(msg);
             placeHolder.stopPlaceHolderChild();
             //tvResetBg.setBackgroundResource(R.drawable.ic_launcher_foreground);
-           // tvResetBg.setBackgroundColor(Color.GREEN);
+            // tvResetBg.setBackgroundColor(Color.GREEN);
         }
     };
 
@@ -61,6 +61,7 @@ public class PlaceHolderActivity extends SubActivity {
                 //.withoutPlaceHolder(tvResetBg)
                 //.withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
                 //.setPlaceHolderDisEnable(true)
+                .setPlaceHolderAnimation(PlaceHolder.ANIMATION)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();
