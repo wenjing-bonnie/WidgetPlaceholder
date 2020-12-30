@@ -16,20 +16,34 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  * <p>
- * 逻辑配置
- * <p>
- * 1.实例化PlaceHolder
- * placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
- * //设置为非圆角
- * //.setPlaceHolderBackgroundColor(Color.YELLOW)
- * //.setPlaceHolderBackgroundResource(R.drawable.bg)
- * //可以设置圆角的
- * .setPlaceHolderBackgroundCorner(Color.RED, 20)
- * .build();
- * 如果没有设置背景的颜色，背景色则将会按照"使用文字默认的字体颜色>字体的背景色>DEFAULT_BACKGROUND",并且在上面增加一个透明度，防止字体颜色是黑色系的时候，显示的太难看
- * 2.在setContentView()之后,需要预占位的控件完全设置完背景之后
- * placeHolder.startPlaceHolderChild();
- * 3.在完成之后,调用placeHolder.stopPlaceHolderChild();来释放预占位的UI
+ * <使用规则>
+ *      <ol>
+ *          <li>1.实例化{@link PlaceHolder},并通过{@link PlaceHolder.Builder}设置参数</li>
+ *              <code>
+ *                  placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this).build();
+ *              </code>
+ *          <li>2.在{@link Activity#setContentView(View)}之后,需要布局文件中的控件完全设置完背景之后调用{@link #startPlaceHolderChild()}</li>
+ *              <code>
+ *                   placeHolder.startPlaceHolderChild();
+ *              </code>
+ *          <li>3.在完成之后,调用{@link #stopPlaceHolderChild()}来释放预占位的UI</li>
+ *              <code>
+ *                  placeHolder.stopPlaceHolderChild();
+ *              </code>
+ *      </ol>
+ * </使用规则>
+ *
+ * <背景的颜色的优先级>
+ *      背景色则将会按照下面的优先级来设置预占位背景:
+ *      <ol>
+ *          <li>(1)背景颜色过渡动画值{@link PlaceHolder.Builder#setPlaceHolderBackgroundColor(int...)}</li>
+ *          <li>(2)设置的背景色{@link PlaceHolder.Builder#setPlaceHolderBackgroundColor(int)}或背景图片{@link PlaceHolder.Builder#setPlaceHolderBackground(Drawable)}<li/>
+ *          <li>(3)使用文字默认的字体颜色{@link android.widget.TextView#setTextColor(int)}</li>
+ *          <li>(4)字体的背景色{@link android.widget.TextView#setBackground(Drawable)}</li>
+ *          <li>(5){link PlaceHolderImpl#DEFAULT_BACKGROUND}</ol>
+ *      </ol>
+ *      注意：默认会在上面颜色的基础上增加一个透明度，防止字体颜色是黑色系的时候，显示的太难看
+ * </背景的颜色的优先级>
  *
  * @author wenjing.liu
  */
@@ -50,10 +64,16 @@ public class PlaceHolder {
         impl = new PlaceHolderImpl(activity, parameter);
     }
 
+    /**
+     * 该方法必须调用在需要布局文件中的控件完全设置完背景之后调用
+     */
     public void startPlaceHolderChild() {
         impl.startPlaceHolderChild();
     }
 
+    /**
+     * 该View已经加载完毕
+     */
     public void stopPlaceHolderChild() {
         impl.stopPlaceHolderView();
     }
@@ -69,16 +89,6 @@ public class PlaceHolder {
             parameter = new PlaceHolderParameter();
         }
 
-        /**
-         * 禁用预加载占位符功能，默认为false，即不禁用
-         *
-         * @param isDisable true：禁用；false:不禁用
-         * @return
-         */
-        public Builder setPlaceHolderDisable(boolean isDisable) {
-            parameter.isDisable = isDisable;
-            return this;
-        }
 
         /**
          * 可以设置颜色
@@ -125,28 +135,14 @@ public class PlaceHolder {
         }
 
         /**
-         * 可以设置背景的corner
-         *
-         * @param color
-         * @param corner
-         * @return
-         */
-        public Builder setPlaceHolderBackgroundCorner(@ColorInt int color, int corner) {
-            parameter.settingBackgroundDrawable = null;
-            parameter.settingBackgroundColor = color;
-            parameter.cornerRadius = corner;
-            return this;
-        }
-
-        /**
-         * 可设置背景的corner，TextView默认的使用文字或color背景的颜色，ImageView默认的是#999999
+         * 可设置背景的corner
+         * 该背景值样式只可通过{@link #setPlaceHolderBackgroundColor(int)}设置背景颜色值或控件默认的设置的值
+         * 默认规则为：TextView默认的使用文字或color背景的颜色，ImageView默认的是#999999
          *
          * @param corner
          * @return
          */
         public Builder setPlaceHolderBackgroundCorner(int corner) {
-            parameter.settingBackgroundDrawable = null;
-            parameter.settingBackgroundColor = 0;
             parameter.cornerRadius = corner;
             return this;
         }
@@ -174,20 +170,32 @@ public class PlaceHolder {
         }
 
         /**
-         * 设置动画效果
+         * 禁用预加载占位符功能，默认为false，即不禁用
          *
+         * @param isDisable true：禁用；false:不禁用
          * @return
          */
-        public Builder setPlaceHolderAnimationDuration(int duration) {
-            parameter.duration = duration;
+        public Builder setPlaceHolderDisable(boolean isDisable) {
+            parameter.isDisable = isDisable;
             return this;
         }
 
+        /**
+         * 设置动画的模式
+         *
+         * @param mode
+         * @return
+         */
         public Builder setPlaceHolderAnimationMode(@AnimationMode int mode) {
             parameter.animationMode = mode;
             return this;
         }
 
+        /**
+         * 生成PlaceHolder对象
+         *
+         * @return
+         */
         public PlaceHolder build() {
             holder = new PlaceHolder(activity, parameter);
             return holder;

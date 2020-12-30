@@ -19,15 +19,12 @@ public class PlaceHolderParameter {
      */
     protected boolean isDisable = false;
     /**
-     * 设置的背景图片
+     * 设置的背景图片或者颜色
      */
     protected Drawable settingBackgroundDrawable;
-
     /**
-     * 设备背景的圆角,如果设置圆角，只能设置颜色，其他Drawable类型不支持
+     * 背景的圆角弧度
      */
-    protected @ColorInt
-    int settingBackgroundColor;
     protected int cornerRadius;
     /**
      * 不需要设置预背景的控件

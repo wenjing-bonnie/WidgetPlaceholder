@@ -56,14 +56,12 @@ public class PlaceHolderActivity extends SubActivity {
                 .setPlaceHolderBackgroundColor(Color.YELLOW)
                 //.setPlaceHolderBackgroundResource(R.drawable.bg)
                 //可以设置圆角的
-                .setPlaceHolderBackgroundCorner(Color.RED, 20)
                 .setPlaceHolderBackgroundCorner(20)
                 //.withoutPlaceHolder(tvResetBg)
                 //.withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
                 //.setPlaceHolderDisable(true)
-                .setPlaceHolderAnimationDuration(2000)
-                .setPlaceHolderAnimationMode(PlaceHolder.ANIMATION_BACKGROUND_COLORS)
-                .setPlaceHolderBackgroundColor(Color.GRAY, Color.LTGRAY)
+                .setPlaceHolderAnimationMode(PlaceHolder.ANIMATION_SWING)
+                .setPlaceHolderBackgroundColor(Color.GRAY, Color.LTGRAY, Color.GRAY)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();

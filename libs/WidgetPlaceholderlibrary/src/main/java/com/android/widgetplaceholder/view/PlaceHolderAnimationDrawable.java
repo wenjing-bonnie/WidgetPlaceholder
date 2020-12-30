@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
@@ -43,9 +42,9 @@ public class PlaceHolderAnimationDrawable extends Drawable {
      */
     private ValueAnimator mRightAnimator;
     /**
-     * 动画的持续时间
+     * 一次动画的持续时间
      */
-    private int mDuration;
+    private int mDuration = 1000;
     /**
      * 该Drawable的width/height
      */
@@ -136,11 +135,14 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     }
 
     /**
-     * Set the animation duration time
+     * Set the duration time for one animation from start to end
      *
      * @param duration
      */
     public void setDuration(int duration) {
+        if (duration <= 0) {
+            return;
+        }
         this.mDuration = duration;
     }
 
@@ -169,7 +171,7 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     }
 
     /**
-     * Set right value animation
+     * Set right value animation infinite until call the {@link #clearAnimation()}
      */
     private void startRightAnimator() {
         mRightAnimator = ValueAnimator.ofInt(canvasWidth, canvasWidth / 3, canvasWidth);
@@ -183,7 +185,7 @@ public class PlaceHolderAnimationDrawable extends Drawable {
             }
         });
         // 除数代表的是执行的次数
-        mRightAnimator.setDuration(mDuration / 2);
+        mRightAnimator.setDuration(mDuration);
         mRightAnimator.start();
     }
 
@@ -206,7 +208,7 @@ public class PlaceHolderAnimationDrawable extends Drawable {
             }
         });
         // 除数代表的是执行的次数
-        mBackgroundAnimator.setDuration(mDuration / 2);
+        mBackgroundAnimator.setDuration(mDuration);
         mBackgroundAnimator.start();
     }
 

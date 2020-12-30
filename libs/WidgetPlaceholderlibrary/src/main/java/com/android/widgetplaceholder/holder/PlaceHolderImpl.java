@@ -179,8 +179,12 @@ public class PlaceHolderImpl {
     private void setChildBackground(View child) {
         //有圆角的背景 或 设置动画
         if (param.cornerRadius > 0 || isSetAnimationStyle()) {
+            int settingBackgroundColor = 0;
+            if (param.settingBackgroundDrawable instanceof ColorDrawable) {
+                settingBackgroundColor = ((ColorDrawable) param.settingBackgroundDrawable).getColor();
+            }
             PlaceHolderAnimationDrawable animationDrawable = new PlaceHolderAnimationDrawable(param.animationMode);
-            animationDrawable.setColor(param.settingBackgroundColor != 0 ? param.settingBackgroundColor : getTextViewDefaultBackground(child));
+            animationDrawable.setColor(settingBackgroundColor != 0 ? settingBackgroundColor : getTextViewDefaultBackground(child));
             animationDrawable.setAlpha(50);
             animationDrawable.setDuration(param.duration);
             if (param.cornerRadius > 0) {
