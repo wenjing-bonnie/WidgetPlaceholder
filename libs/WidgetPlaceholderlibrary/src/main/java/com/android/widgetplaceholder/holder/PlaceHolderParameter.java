@@ -39,4 +39,8 @@ public class PlaceHolderParameter {
      * 动画样式
      */
     protected int animationStyle;
+    /**
+     * 动画持续时间
+     */
+    protected int duration;
 }

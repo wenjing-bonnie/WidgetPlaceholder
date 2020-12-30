@@ -1,21 +1,18 @@
 package com.android.widgetplaceholder.holder;
 
 import android.app.Activity;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.IdRes;
 
 import com.android.widgetplaceholder.utils.Log;
-import com.android.widgetplaceholder.view.PlaceHolderAnimationBackground;
+import com.android.widgetplaceholder.view.PlaceHolderAnimationDrawable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -192,19 +189,19 @@ public class PlaceHolderImpl {
      * @param child
      */
     private void setChildBackground(View child) {
-
         //有圆角的背景 或 设置动画
         if (param.cornerRadius > 0 || isSetAnimationStyle()) {
-            PlaceHolderAnimationBackground cornerBackground = new PlaceHolderAnimationBackground();
+            PlaceHolderAnimationDrawable cornerBackground = new PlaceHolderAnimationDrawable();
             cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : getTextViewDefaultBackground(child));
             cornerBackground.setAlpha(50);
-            cornerBackground.setCornerRadius(param.cornerRadius);
-            child.setBackground(cornerBackground);
-            if (isSetAnimationStyle()) {
-                startPlaceHolderAnimation(cornerBackground);
+            cornerBackground.setDuration(param.duration);
+            if (param.cornerRadius > 0) {
+                cornerBackground.setCornerRadius(param.cornerRadius);
             }
+            child.setBackground(cornerBackground);
             return;
         }
+        //设置的背景样式或者默认的样式
         Drawable bg = param.settingBackgroundDrawable;
         child.setAlpha(0.5f);
         child.setBackground(bg == null ? new ColorDrawable(getTextViewDefaultBackground(child)) : bg);
@@ -291,19 +288,11 @@ public class PlaceHolderImpl {
         child.setBackground(buffer.bgDrawable);
     }
 
-
-    private void startPlaceHolderAnimation(PlaceHolderAnimationBackground animationBackground) {
-        if (!isSetAnimationStyle()) {
-            return;
-        }
-        animationBackground.startAnimation();
-    }
-
     private void stopPlaceHolderAnimation(View child) {
         if (!isSetAnimationStyle()) {
             return;
         }
-        ((PlaceHolderAnimationBackground) child.getBackground()).clearAnimation();
+        ((PlaceHolderAnimationDrawable) child.getBackground()).clearAnimation();
     }
 
     /**

@@ -157,8 +157,9 @@ public class PlaceHolder {
          * @param style
          * @return
          */
-        public Builder setPlaceHolderAnimation(int style) {
+        public Builder setPlaceHolderAnimation(int style,int duration) {
             parameter.animationStyle = style;
+            parameter.duration = duration;
             return this;
         }
 
