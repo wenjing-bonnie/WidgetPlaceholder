@@ -40,7 +40,7 @@ public class PlaceHolderImpl {
      */
     protected void startPlaceHolderChild() {
         //如果不需要使用预占位UI，则直接返回
-        if (this.param.isDisEnable) {
+        if (this.param.isDisable) {
             return;
         }
         ViewGroup content = activity.findViewById(android.R.id.content);
@@ -80,7 +80,7 @@ public class PlaceHolderImpl {
      * @return
      */
     private boolean isWithoutPlaceHolderView(View child) {
-        if (this.param.isDisEnable) {
+        if (this.param.isDisable) {
             return true;
         }
         if (this.param.withoutChildes == null || this.param.withoutChildes.length == 0) {
@@ -101,7 +101,7 @@ public class PlaceHolderImpl {
      * @return true：为不需要设置；false为需要
      */
     private boolean isWithoutPlaceHolderView(int childId) {
-        if (this.param.isDisEnable) {
+        if (this.param.isDisable) {
             return true;
         }
         if (this.param.withoutChildIds == null || this.param.withoutChildIds.length == 0) {
@@ -162,18 +162,6 @@ public class PlaceHolderImpl {
         buffer.bgDrawable = child.getBackground();
         buffer.srcDrawable = child.getDrawable();
         childBgParams.put(child, buffer);
-        ViewGroup.LayoutParams params = child.getLayoutParams();
-//         Log.d("width = " + buffer.srcDrawable.getIntrinsicWidth() + " , height = " + buffer.srcDrawable.getIntrinsicHeight());
-//         Log.d("width = " + params.width + " , height = " + params.height);
-//         Log.d("width = " + child.getMeasuredWidth() + " , height = " + child.getMeasuredHeight());
-
-        //重新设置
-//        if (params.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
-//            params.width = buffer.srcDrawable.getIntrinsicWidth();
-//        }
-//        if (params.height == ViewGroup.LayoutParams.MATCH_PARENT) {
-//            params.height = buffer.srcDrawable.getIntrinsicHeight();
-//        }
         //TODO 如果ImageView去掉src之后，而ImageView设置的wrap_content的区域怎么办
         //child.setLayoutParams(params);
         setChildBackground(child);
@@ -191,14 +179,15 @@ public class PlaceHolderImpl {
     private void setChildBackground(View child) {
         //有圆角的背景 或 设置动画
         if (param.cornerRadius > 0 || isSetAnimationStyle()) {
-            PlaceHolderAnimationDrawable cornerBackground = new PlaceHolderAnimationDrawable();
-            cornerBackground.setColor(param.settingCornerBackgroundColor != 0 ? param.settingCornerBackgroundColor : getTextViewDefaultBackground(child));
-            cornerBackground.setAlpha(50);
-            cornerBackground.setDuration(param.duration);
+            PlaceHolderAnimationDrawable animationDrawable = new PlaceHolderAnimationDrawable(param.isAnimationEnable);
+            animationDrawable.setColor(param.settingBackgroundColor != 0 ? param.settingBackgroundColor : getTextViewDefaultBackground(child));
+            animationDrawable.setAlpha(50);
+            animationDrawable.setDuration(param.duration);
             if (param.cornerRadius > 0) {
-                cornerBackground.setCornerRadius(param.cornerRadius);
+                animationDrawable.setCornerRadius(param.cornerRadius);
             }
-            child.setBackground(cornerBackground);
+            animationDrawable.setBackgroundAnimationColor(param.settingBackgroundColors);
+            child.setBackground(animationDrawable);
             return;
         }
         //设置的背景样式或者默认的样式
@@ -288,6 +277,11 @@ public class PlaceHolderImpl {
         child.setBackground(buffer.bgDrawable);
     }
 
+    /**
+     * 结束动画
+     *
+     * @param child
+     */
     private void stopPlaceHolderAnimation(View child) {
         if (!isSetAnimationStyle()) {
             return;
@@ -301,6 +295,6 @@ public class PlaceHolderImpl {
      * @return
      */
     private boolean isSetAnimationStyle() {
-        return param != null && param.animationStyle > 0;
+        return param != null && param.isAnimationEnable;
     }
 }

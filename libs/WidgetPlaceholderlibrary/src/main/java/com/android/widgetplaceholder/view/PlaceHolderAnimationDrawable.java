@@ -1,5 +1,7 @@
 package com.android.widgetplaceholder.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -22,7 +24,9 @@ import com.android.widgetplaceholder.utils.Log;
  * @author wenjing.liu
  */
 public class PlaceHolderAnimationDrawable extends Drawable {
+    private boolean isAnimationEnable = false;
     private Paint mPaint;
+    private @ColorInt int mPaintColor;
     /**
      * Paint透明度
      */
@@ -52,24 +56,31 @@ public class PlaceHolderAnimationDrawable extends Drawable {
      * 动画的实时width
      */
     private int drawRight;
+    /**
+     * 背景色变化
+     */
+    private ValueAnimator mBackgroundAnimator;
+    private int[] mColorBackgrounds;
 
 
-    public PlaceHolderAnimationDrawable() {
+    public PlaceHolderAnimationDrawable(boolean isAnimEnable) {
         mPaint = new Paint();
         mRectF = new RectF();
+        this.isAnimationEnable = isAnimEnable;
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
         //没有使用动画或者动画已经完成了初始化（即在动画过程中）
-        if (mRightAnimator == null || canvasWidth == 0 || canvasHeight == 0) {
-            canvasWidth = canvas.getWidth();
-            canvasHeight = canvas.getHeight();
+        if (canvasWidth == 0 || canvasHeight == 0) {
+            canvasWidth = getBounds().width();
+            canvasHeight = getBounds().height();
             drawRight = canvasWidth;
             startAnimation();
         }
         drawRoundRect(canvas, drawRight);
     }
+
 
     private void drawRoundRect(Canvas canvas, int right) {
         mRectF.left = 0;
@@ -106,7 +117,17 @@ public class PlaceHolderAnimationDrawable extends Drawable {
      * @param argb
      */
     public void setColor(@ColorInt int argb) {
+        this.mPaintColor = argb;
         mPaint.setColor(argb);
+    }
+
+    /**
+     * This drawable to use change color
+     *
+     * @param color
+     */
+    public void setBackgroundAnimationColor(@ColorInt int... color) {
+        this.mColorBackgrounds = color;
     }
 
     @Override
@@ -116,7 +137,7 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     }
 
     /**
-     * 设置动画的持续时间
+     * Set the animation duration time
      *
      * @param duration
      */
@@ -125,16 +146,34 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     }
 
     /**
-     * 开始动画
+     * Start animation
      */
     private void startAnimation() {
+        if (!isAnimationEnable) {
+            return;
+        }
         //必须设置动画的时间 TODO 需要考虑下在请求过程中的这个时间怎么计算，所以这个时间估计不能这么设置
         if (mDuration <= 0) {
             throw new IllegalArgumentException("Must set the animation duration ");
         }
-        mRightAnimator = ValueAnimator.ofInt(canvasWidth, canvasWidth / 3, canvasWidth);
+        setRightAnimator();
+        setBackgroundAnimator();
+        AnimatorSet set = new AnimatorSet();
+        AnimatorSet.Builder builder = set.play(mRightAnimator);
+        if (mBackgroundAnimator != null) {
+            builder.with(mBackgroundAnimator);
+        }
         // 除数代表的是执行的次数
-        mRightAnimator.setDuration(mDuration / 2);
+        set.setDuration(mDuration / 2);
+
+        set.start();
+    }
+
+    /**
+     * Set right value animation
+     */
+    private void setRightAnimator() {
+        mRightAnimator = ValueAnimator.ofInt(canvasWidth, canvasWidth / 3, canvasWidth);
         mRightAnimator.setRepeatMode(ValueAnimator.RESTART);
         mRightAnimator.setRepeatCount(ValueAnimator.INFINITE);
         mRightAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -144,13 +183,40 @@ public class PlaceHolderAnimationDrawable extends Drawable {
                 invalidateSelf();
             }
         });
-        mRightAnimator.start();
     }
 
     /**
-     * 结束动画
+     * Set paint color value animation
+     */
+    private void setBackgroundAnimator() {
+        if (mColorBackgrounds == null || mColorBackgrounds.length == 0) {
+            return;
+        }
+        mBackgroundAnimator = ValueAnimator.ofArgb(mColorBackgrounds);
+        mBackgroundAnimator.setRepeatMode(ValueAnimator.RESTART);
+        mBackgroundAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        mBackgroundAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                mPaintColor = (int) animation.getAnimatedValue();
+                setColor(mPaintColor);
+            }
+        });
+    }
+
+    /**
+     * Finish the animation
      */
     public void clearAnimation() {
+        if (!isAnimationEnable) {
+            return;
+        }
+        clearSwingAnimation();
+        clearBackgroundAnimation();
+    }
+
+
+    private void clearSwingAnimation() {
         if (mRightAnimator == null) {
             return;
         }
@@ -159,5 +225,13 @@ public class PlaceHolderAnimationDrawable extends Drawable {
         canvasWidth = 0;
         canvasHeight = 0;
         drawRight = 0;
+    }
+
+    private void clearBackgroundAnimation() {
+        if (mBackgroundAnimator == null) {
+            return;
+        }
+        mBackgroundAnimator.cancel();
+        mBackgroundAnimator = null;
     }
 }

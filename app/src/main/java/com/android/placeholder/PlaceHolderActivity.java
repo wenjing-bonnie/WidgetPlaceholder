@@ -60,8 +60,9 @@ public class PlaceHolderActivity extends SubActivity {
                 .setPlaceHolderBackgroundCorner(20)
                 //.withoutPlaceHolder(tvResetBg)
                 //.withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
-                //.setPlaceHolderDisEnable(true)
-                .setPlaceHolderAnimation(PlaceHolder.ANIMATION, 2000)
+                //.setPlaceHolderDisable(true)
+                .setPlaceHolderAnimationDuration(2000)
+                .setPlaceHolderAnimationEnable(true)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();

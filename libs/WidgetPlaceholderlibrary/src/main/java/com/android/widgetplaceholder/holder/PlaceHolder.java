@@ -3,12 +3,15 @@ package com.android.widgetplaceholder.holder;
 import android.app.Activity;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
@@ -32,8 +35,15 @@ import androidx.annotation.IdRes;
  */
 public class PlaceHolder {
 
+    public final static int ANIMATION_SWING = 1;
+    public final static int ANIMATION_BACKGROUND_COLOR = 2;
+
+    @IntDef({ANIMATION_SWING, ANIMATION_BACKGROUND_COLOR})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AnimationMode {
+    }
+
     private PlaceHolderImpl impl;
-    public final static int ANIMATION = 1;
 
     protected PlaceHolder(Activity activity, PlaceHolderParameter parameter) {
         impl = new PlaceHolderImpl(activity, parameter);
@@ -59,13 +69,13 @@ public class PlaceHolder {
         }
 
         /**
-         * 设置预加载UI不起作用，默认的为true
+         * 禁用预加载占位符功能，默认为false，即不禁用
          *
-         * @param isEnable true:起作用；false:不起作用
+         * @param isDisable true：禁用；false:不禁用
          * @return
          */
-        public Builder setPlaceHolderDisEnable(boolean isEnable) {
-            parameter.isDisEnable = isEnable;
+        public Builder setPlaceHolderDisable(boolean isDisable) {
+            parameter.isDisable = isDisable;
             return this;
         }
 
@@ -77,6 +87,17 @@ public class PlaceHolder {
          */
         public Builder setPlaceHolderBackgroundColor(@ColorInt int color) {
             parameter.settingBackgroundDrawable = new ColorDrawable(color);
+            return this;
+        }
+
+        /**
+         * 可以设置背景色的过渡动画
+         *
+         * @param color
+         * @return
+         */
+        public Builder setPlaceHolderBackgroundColor(@ColorInt int... color) {
+            parameter.settingBackgroundColors = color;
             return this;
         }
 
@@ -111,7 +132,7 @@ public class PlaceHolder {
          */
         public Builder setPlaceHolderBackgroundCorner(@ColorInt int color, int corner) {
             parameter.settingBackgroundDrawable = null;
-            parameter.settingCornerBackgroundColor = color;
+            parameter.settingBackgroundColor = color;
             parameter.cornerRadius = corner;
             return this;
         }
@@ -124,7 +145,7 @@ public class PlaceHolder {
          */
         public Builder setPlaceHolderBackgroundCorner(int corner) {
             parameter.settingBackgroundDrawable = null;
-            parameter.settingCornerBackgroundColor = 0;
+            parameter.settingBackgroundColor = 0;
             parameter.cornerRadius = corner;
             return this;
         }
@@ -154,12 +175,15 @@ public class PlaceHolder {
         /**
          * 设置动画效果
          *
-         * @param style
          * @return
          */
-        public Builder setPlaceHolderAnimation(int style,int duration) {
-            parameter.animationStyle = style;
+        public Builder setPlaceHolderAnimationDuration(int duration) {
             parameter.duration = duration;
+            return this;
+        }
+
+        public Builder setPlaceHolderAnimationEnable(boolean enable) {
+            parameter.isAnimationEnable = enable;
             return this;
         }
 
