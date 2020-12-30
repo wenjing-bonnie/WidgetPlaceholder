@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import androidx.annotation.Nullable;
 
 import com.android.widgetplaceholder.R;
-import com.android.widgetplaceholder.utils.Log;
+import com.android.placeholder.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;

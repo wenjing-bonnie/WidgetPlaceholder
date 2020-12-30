@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.holder;
+package com.android.placeholder.holder;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
 
-import com.android.widgetplaceholder.utils.Log;
-import com.android.widgetplaceholder.view.PlaceHolderAnimationDrawable;
+import com.android.placeholder.utils.Log;
+import com.android.placeholder.view.PlaceHolderAnimationDrawable;
 
 import java.util.HashMap;
 import java.util.Map;

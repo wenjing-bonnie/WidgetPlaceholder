@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.view;
+package com.android.placeholder.view;
 
 /**
  * Created by wenjing.liu on 2020/12/30 in J1.

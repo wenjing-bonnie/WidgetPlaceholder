@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.utils;
+package com.android.placeholder.utils;
 
 /**
  * Created by wenjing.liu on 2020/10/10 .

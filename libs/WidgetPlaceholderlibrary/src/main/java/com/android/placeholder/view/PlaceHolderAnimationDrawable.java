@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.view;
+package com.android.placeholder.view;
 
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
@@ -13,8 +13,8 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.widgetplaceholder.holder.PlaceHolder;
-import com.android.widgetplaceholder.utils.Log;
+import com.android.placeholder.holder.PlaceHolder;
+import com.android.placeholder.utils.Log;
 
 /**
  * Created by wenjing.liu on 2020/12/7 in J1.

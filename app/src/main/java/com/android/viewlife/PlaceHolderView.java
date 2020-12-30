@@ -9,7 +9,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.widgetplaceholder.utils.Log;
+import com.android.placeholder.utils.Log;
 
 /**
  * Created by wenjing.liu on 2020/10/10 .

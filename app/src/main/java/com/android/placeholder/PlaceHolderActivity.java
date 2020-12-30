@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
-import com.android.widgetplaceholder.holder.PlaceHolder;
+import com.android.placeholder.holder.PlaceHolder;
 
 public class PlaceHolderActivity extends SubActivity {
     PlaceHolder placeHolder;

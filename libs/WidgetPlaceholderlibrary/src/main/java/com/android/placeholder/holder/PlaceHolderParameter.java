@@ -1,9 +1,7 @@
-package com.android.widgetplaceholder.holder;
+package com.android.placeholder.holder;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
-import androidx.annotation.ColorInt;
 
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.

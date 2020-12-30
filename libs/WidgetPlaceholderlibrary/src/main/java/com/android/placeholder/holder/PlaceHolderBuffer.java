@@ -1,4 +1,4 @@
-package com.android.widgetplaceholder.holder;
+package com.android.placeholder.holder;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
