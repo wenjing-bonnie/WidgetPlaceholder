@@ -20,6 +20,9 @@ import java.util.Map;
 /**
  * Created by wenjing.liu on 2020/12/4 in J1.
  * 逻辑实现
+ * TODO
+ * 1)三者是圆形
+ * 2）插件化
  *
  * @author wenjing.liu
  */
