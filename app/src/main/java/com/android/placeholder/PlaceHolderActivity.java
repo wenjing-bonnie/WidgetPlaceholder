@@ -53,7 +53,7 @@ public class PlaceHolderActivity extends SubActivity {
     private void startPlaceHolder() {
         placeHolder = new PlaceHolder.Builder(PlaceHolderActivity.this)
                 //设置为非圆角
-                .setPlaceHolderBackgroundColor(Color.YELLOW)
+                //.setPlaceHolderBackgroundColor(Color.YELLOW)
                 //.setPlaceHolderBackgroundResource(R.drawable.bg)
                 //可以设置圆角的
                 .setPlaceHolderBackgroundCorner(20)

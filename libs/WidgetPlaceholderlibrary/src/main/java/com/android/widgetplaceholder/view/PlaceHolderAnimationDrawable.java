@@ -7,12 +7,14 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.widgetplaceholder.holder.PlaceHolder;
+import com.android.widgetplaceholder.utils.Log;
 
 /**
  * Created by wenjing.liu on 2020/12/7 in J1.
@@ -68,28 +70,6 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     }
 
     @Override
-    public void draw(@NonNull Canvas canvas) {
-        //没有使用动画或者动画已经完成了初始化（即在动画过程中）
-        if (canvasWidth == 0 || canvasHeight == 0) {
-            canvasWidth = getBounds().width();
-            canvasHeight = getBounds().height();
-            drawRight = canvasWidth;
-            startAnimation();
-        }
-        drawRoundRect(canvas, drawRight);
-    }
-
-
-    private void drawRoundRect(Canvas canvas, int right) {
-        mRectF.left = 0;
-        mRectF.right = right;
-        mRectF.top = 0;
-        mRectF.bottom = canvasHeight;
-        canvas.drawRoundRect(mRectF, mRadius, mRadius, mPaint);
-    }
-
-
-    @Override
     public void setAlpha(int alpha) {
         mAlpha = alpha;
         mPaint.setAlpha(mAlpha);
@@ -128,10 +108,23 @@ public class PlaceHolderAnimationDrawable extends Drawable {
         this.mColorBackgrounds = color;
     }
 
-    @Override
-    public int getOpacity() {
-        //TODO 逻辑还没有写完
-        return mAlpha == 255 ? PixelFormat.OPAQUE : PixelFormat.TRANSLUCENT;
+    /**
+     * When the activity is loading ui ,the user finish the activity, so need to remove all the animations
+     *
+     * @param bgView the view use the drawable
+     */
+    public void setRemoveOnAttachStateChangeListener(View bgView) {
+        bgView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View v) {
+
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View v) {
+                clearAnimation();
+            }
+        });
     }
 
     /**
@@ -146,16 +139,38 @@ public class PlaceHolderAnimationDrawable extends Drawable {
         this.mDuration = duration;
     }
 
+    @Override
+    public int getOpacity() {
+        //TODO 逻辑还没有写完
+        return mAlpha == 255 ? PixelFormat.OPAQUE : PixelFormat.TRANSLUCENT;
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        //没有使用动画或者动画已经完成了初始化（即在动画过程中）
+        if (canvasWidth == 0 || canvasHeight == 0) {
+            canvasWidth = getBounds().width();
+            canvasHeight = getBounds().height();
+            drawRight = canvasWidth;
+            startAnimation();
+        }
+        drawRoundRect(canvas, drawRight);
+    }
+
+    private void drawRoundRect(Canvas canvas, int right) {
+        mRectF.left = 0;
+        mRectF.right = right;
+        mRectF.top = 0;
+        mRectF.bottom = canvasHeight;
+        canvas.drawRoundRect(mRectF, mRadius, mRadius, mPaint);
+    }
+
     /**
      * Start animation
      */
     private void startAnimation() {
         if (!enableAnimation()) {
             return;
-        }
-        //必须设置动画的时间 TODO 需要考虑下在请求过程中的这个时间怎么计算，所以这个时间估计不能这么设置
-        if (mDuration <= 0) {
-            throw new IllegalArgumentException("Must set the animation duration ");
         }
         switch (mAnimationMode) {
             case PlaceHolder.ANIMATION_SWING: {

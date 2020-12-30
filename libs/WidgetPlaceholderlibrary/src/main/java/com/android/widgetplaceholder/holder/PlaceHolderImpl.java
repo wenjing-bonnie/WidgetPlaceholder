@@ -191,6 +191,7 @@ public class PlaceHolderImpl {
                 animationDrawable.setCornerRadius(param.cornerRadius);
             }
             animationDrawable.setBackgroundAnimationColor(param.settingBackgroundColors);
+            animationDrawable.setRemoveOnAttachStateChangeListener(child);
             child.setBackground(animationDrawable);
             return;
         }
