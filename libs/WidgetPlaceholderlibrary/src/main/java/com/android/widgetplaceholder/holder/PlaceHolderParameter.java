@@ -2,7 +2,6 @@ package com.android.widgetplaceholder.holder;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.ColorInt;
 
@@ -39,6 +38,9 @@ public class PlaceHolderParameter {
      * 动画持续时间
      */
     protected int duration;
-    protected boolean isAnimationEnable = false;
+    /**
+     * 动画样式
+     */
+    protected int animationMode = PlaceHolder.ANIMATION_NONE;
     protected int[] settingBackgroundColors;
 }

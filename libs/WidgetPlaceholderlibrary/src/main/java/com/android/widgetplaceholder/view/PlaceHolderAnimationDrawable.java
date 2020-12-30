@@ -1,7 +1,5 @@
 package com.android.widgetplaceholder.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
@@ -9,12 +7,13 @@ import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.view.animation.LinearInterpolator;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.widgetplaceholder.utils.Log;
+import com.android.widgetplaceholder.holder.PlaceHolder;
 
 /**
  * Created by wenjing.liu on 2020/12/7 in J1.
@@ -24,7 +23,7 @@ import com.android.widgetplaceholder.utils.Log;
  * @author wenjing.liu
  */
 public class PlaceHolderAnimationDrawable extends Drawable {
-    private boolean isAnimationEnable = false;
+    private @PlaceHolder.AnimationMode int mAnimationMode;
     private Paint mPaint;
     private @ColorInt int mPaintColor;
     /**
@@ -63,10 +62,10 @@ public class PlaceHolderAnimationDrawable extends Drawable {
     private int[] mColorBackgrounds;
 
 
-    public PlaceHolderAnimationDrawable(boolean isAnimEnable) {
+    public PlaceHolderAnimationDrawable(int mode) {
         mPaint = new Paint();
         mRectF = new RectF();
-        this.isAnimationEnable = isAnimEnable;
+        this.mAnimationMode = mode;
     }
 
     @Override
@@ -149,30 +148,30 @@ public class PlaceHolderAnimationDrawable extends Drawable {
      * Start animation
      */
     private void startAnimation() {
-        if (!isAnimationEnable) {
+        if (!enableAnimation()) {
             return;
         }
         //必须设置动画的时间 TODO 需要考虑下在请求过程中的这个时间怎么计算，所以这个时间估计不能这么设置
         if (mDuration <= 0) {
             throw new IllegalArgumentException("Must set the animation duration ");
         }
-        setRightAnimator();
-        setBackgroundAnimator();
-        AnimatorSet set = new AnimatorSet();
-        AnimatorSet.Builder builder = set.play(mRightAnimator);
-        if (mBackgroundAnimator != null) {
-            builder.with(mBackgroundAnimator);
+        switch (mAnimationMode) {
+            case PlaceHolder.ANIMATION_SWING: {
+                startRightAnimator();
+                break;
+            }
+            case PlaceHolder.ANIMATION_BACKGROUND_COLORS: {
+                startBackgroundAnimator();
+                break;
+            }
+            default:
         }
-        // 除数代表的是执行的次数
-        set.setDuration(mDuration / 2);
-
-        set.start();
     }
 
     /**
      * Set right value animation
      */
-    private void setRightAnimator() {
+    private void startRightAnimator() {
         mRightAnimator = ValueAnimator.ofInt(canvasWidth, canvasWidth / 3, canvasWidth);
         mRightAnimator.setRepeatMode(ValueAnimator.RESTART);
         mRightAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -183,14 +182,17 @@ public class PlaceHolderAnimationDrawable extends Drawable {
                 invalidateSelf();
             }
         });
+        // 除数代表的是执行的次数
+        mRightAnimator.setDuration(mDuration / 2);
+        mRightAnimator.start();
     }
 
     /**
      * Set paint color value animation
      */
-    private void setBackgroundAnimator() {
+    private void startBackgroundAnimator() {
         if (mColorBackgrounds == null || mColorBackgrounds.length == 0) {
-            return;
+            throw new IllegalArgumentException("Must set background colors");
         }
         mBackgroundAnimator = ValueAnimator.ofArgb(mColorBackgrounds);
         mBackgroundAnimator.setRepeatMode(ValueAnimator.RESTART);
@@ -200,15 +202,19 @@ public class PlaceHolderAnimationDrawable extends Drawable {
             public void onAnimationUpdate(ValueAnimator animation) {
                 mPaintColor = (int) animation.getAnimatedValue();
                 setColor(mPaintColor);
+                invalidateSelf();
             }
         });
+        // 除数代表的是执行的次数
+        mBackgroundAnimator.setDuration(mDuration / 2);
+        mBackgroundAnimator.start();
     }
 
     /**
      * Finish the animation
      */
     public void clearAnimation() {
-        if (!isAnimationEnable) {
+        if (!enableAnimation()) {
             return;
         }
         clearSwingAnimation();
@@ -233,5 +239,9 @@ public class PlaceHolderAnimationDrawable extends Drawable {
         }
         mBackgroundAnimator.cancel();
         mBackgroundAnimator = null;
+    }
+
+    private boolean enableAnimation() {
+        return mAnimationMode > 0;
     }
 }

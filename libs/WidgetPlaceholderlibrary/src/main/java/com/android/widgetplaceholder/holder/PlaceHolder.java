@@ -35,10 +35,11 @@ import java.lang.annotation.RetentionPolicy;
  */
 public class PlaceHolder {
 
+    public final static int ANIMATION_NONE = 0;
     public final static int ANIMATION_SWING = 1;
-    public final static int ANIMATION_BACKGROUND_COLOR = 2;
+    public final static int ANIMATION_BACKGROUND_COLORS = 2;
 
-    @IntDef({ANIMATION_SWING, ANIMATION_BACKGROUND_COLOR})
+    @IntDef({ANIMATION_NONE, ANIMATION_SWING, ANIMATION_BACKGROUND_COLORS})
     @Retention(RetentionPolicy.SOURCE)
     public @interface AnimationMode {
     }
@@ -182,8 +183,8 @@ public class PlaceHolder {
             return this;
         }
 
-        public Builder setPlaceHolderAnimationEnable(boolean enable) {
-            parameter.isAnimationEnable = enable;
+        public Builder setPlaceHolderAnimationMode(@AnimationMode int mode) {
+            parameter.animationMode = mode;
             return this;
         }
 
