@@ -40,7 +40,7 @@ dependencies {
    
  （2）在setContentView()之后,需要预占位的控件完全设置完背景之后
   ```
-      placeHolder.startPlaceHolderChild();
+   placeHolder.startPlaceHolderChild();
    ```
   （3）在完成之后,释放预占位的UI
   ```
