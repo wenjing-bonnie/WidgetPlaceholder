@@ -27,14 +27,14 @@
             android:layout_margin="20px"
             android:background="@android:color/holo_orange_light"
             android:text="测试Button测试Button测试Button测试Button测试Button"
-            android:textColor="@color/text_color"/>
+            android:textColor="@color/text_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20px"
-            android:background="@android:color/holo_blue_light"
-            android:src="@drawable/ic_launcher_foreground" />
+            android:background="@android:color/holo_orange_light"
+            android:src="@drawable/computer" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,8 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20px"
-                android:background="@android:color/holo_blue_dark"
-                android:src="@drawable/ic_launcher_foreground" />
+                android:background="@android:color/holo_orange_light"
+                android:src="@drawable/computer" />
 
         </LinearLayout>
 
@@ -91,7 +91,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20px"
-                android:text="通过的方式代码中设置Button的背景" />
+                android:onClick="goPlaceHolderListViewActivity"
+                android:text="通过的方式代码中设置Button的背景 点击进入到ListView界面" />
 
             <ImageView
                 android:id="@+id/iv_test_code"

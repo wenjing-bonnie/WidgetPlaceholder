@@ -1,10 +1,12 @@
 package com.android.placeholder;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,9 +44,8 @@ public class PlaceHolderActivity extends SubActivity {
         ivTestCode = findViewById(R.id.iv_test_code);
 
         tvTestCode.setBackgroundColor(Color.RED);
-        btnTestCode.setBackgroundResource(R.drawable.ic_launcher);
         ivTestCode.setBackground(getDrawable(R.drawable.bg));
-        ivTestCode.setImageResource(R.drawable.ic_launcher);
+        ivTestCode.setImageResource(R.drawable.computer);
 
         startPlaceHolder();
     }
@@ -81,6 +82,11 @@ public class PlaceHolderActivity extends SubActivity {
 
             }
         }.start();
+    }
+
+    public void goPlaceHolderListViewActivity(View view) {
+        Intent intent = new Intent(PlaceHolderActivity.this, PlaceHolderListViewActivity.class);
+        startActivity(intent);
     }
 
 }

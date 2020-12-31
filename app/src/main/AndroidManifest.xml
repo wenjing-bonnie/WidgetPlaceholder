@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.Holo.Light">
+        <activity android:name="com.android.placeholder.PlaceHolderListViewActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
@@ -34,7 +35,6 @@
         <activity
             android:name="com.android.attrsetting.GridViewAttrTheme3SettingActivity"
             android:theme="@style/GridViewThemeAttr1" />
-
         <activity
             android:name="com.android.placeholder.PlaceHolderActivity"
             android:label="预占位" />
