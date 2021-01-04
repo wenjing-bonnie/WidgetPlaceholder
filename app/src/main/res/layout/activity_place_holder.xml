@@ -91,8 +91,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20px"
+                android:background="@android:color/holo_orange_light"
                 android:onClick="goPlaceHolderListViewActivity"
-                android:text="通过的方式代码中设置Button的背景 点击进入到ListView界面" />
+                android:padding="20px"
+                android:text="点击进入到ListView界面" />
 
             <ImageView
                 android:id="@+id/iv_test_code"

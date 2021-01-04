@@ -42,10 +42,6 @@ public class PlaceHolderImpl {
      * 开始循环遍历布局文件中的所有的子View,应用于Activity/Fragment
      */
     protected void startPlaceHolderChild() {
-        //如果不需要使用预占位UI，则直接返回
-        if (this.param.isDisable) {
-            return;
-        }
         ViewGroup content = activity.findViewById(android.R.id.content);
         startPlaceHolderChild(content);
     }
@@ -56,8 +52,9 @@ public class PlaceHolderImpl {
      * @param viewGroup
      */
     protected void startPlaceHolderChild(View viewGroup) {
+        //如果不需要使用预占位UI，则直接返回
         //有设置不需要预加载UI的View
-        if (isWithoutPlaceHolderView(viewGroup)
+        if (this.param.isDisable || isWithoutPlaceHolderView(viewGroup)
                 || isWithoutPlaceHolderView(viewGroup.getId())) {
             return;
         }

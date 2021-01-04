@@ -1,6 +1,7 @@
 package com.android.placeholder.holder;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.View;
@@ -32,7 +33,7 @@ import java.lang.annotation.RetentionPolicy;
  *              </code>
  *      </ol>
  * </使用规则>
- *
+ * <p>
  * <背景的颜色的优先级>
  *      背景色则将会按照下面的优先级来设置预占位背景:
  *      <ol>
@@ -71,6 +72,10 @@ public class PlaceHolder {
         impl.startPlaceHolderChild();
     }
 
+    public void startPlaceHolderChild(View parent) {
+        impl.startPlaceHolderChild(parent);
+    }
+
     /**
      * 该View已经加载完毕
      */
@@ -83,6 +88,13 @@ public class PlaceHolder {
         PlaceHolder holder;
         private Activity activity;
         private PlaceHolderParameter parameter;
+
+        public Builder(Context context) {
+            // if (context instanceof  Activity){
+            this(((Activity) context));
+            // }
+
+        }
 
         public Builder(Activity activity) {
             this.activity = activity;
