@@ -28,20 +28,14 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
     private List<String> dataSources;
     private LayoutInflater inflater;
     private PlaceHolder placeHolder;
-    private Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            placeHolder.stopPlaceHolderChild();
-        }
-    };
 
-    public PlaceHolderListViewAdapter(Context context, List<String> sources) {
+    public PlaceHolderListViewAdapter(Context context, List<String> sources, PlaceHolder holder) {
         this.context = context;
         this.dataSources = sources;
+        this.placeHolder = holder;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
     }
+
 
     @Override
     public int getCount() {
@@ -64,23 +58,22 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ItemViewHolder();
             convertView = inflater.inflate(R.layout.item_place_holder_list_view, parent, false);
-
             holder.ivImage = convertView.findViewById(R.id.iv_image);
             holder.tvTitle = convertView.findViewById(R.id.tv_title);
             holder.tvMessage = convertView.findViewById(R.id.tv_message);
             convertView.setTag(holder);
-            
-            placeHolder = new PlaceHolder.Builder(context).build();
-            placeHolder.startPlaceHolderChild(convertView);
-
         } else {
             holder = (ItemViewHolder) convertView.getTag();
         }
         holder.tvTitle.setText(dataSources.get(position));
-        holder.tvMessage.setText(String.format("第%d行: 永定河发源于山西省宁武县管涔山，全河流经山西、内蒙古、河北、北京、天津五省市，在天津汇于海河，至塘沽注入渤海", position));
-
-
-        handler.sendEmptyMessageDelayed(1, 2000);
+        String message;
+        if (position % 2 == 0) {
+            message = String.format("第%d行: 永定河发源于山西省宁武县管涔山，全河流经山西、内蒙古、河北、北京、天津五省市，在天津汇于海河，至塘沽注入渤海", position);
+        } else {
+            message = String.format("第%d行：救荒本草是哪个朝代朱棣编纂的一部专著", position);
+        }
+        holder.tvMessage.setText(message);
+        placeHolder.startPlaceHolderChild(R.id.lv_test_place_holder, position, convertView);
         return convertView;
     }
 

@@ -10,6 +10,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
+import androidx.annotation.LayoutRes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -72,8 +73,20 @@ public class PlaceHolder {
         impl.startPlaceHolderChild();
     }
 
+    /**
+     * @param parent
+     */
     public void startPlaceHolderChild(View parent) {
         impl.startPlaceHolderChild(parent);
+    }
+
+    /**
+     * @param listViewId  该ListView的id,用来判断该ListView是否限制使用该预占位功能
+     * @param position    每个item的position
+     * @param convertView 每个item的view
+     */
+    public void startPlaceHolderChild(@IdRes int listViewId, int position, View convertView) {
+        impl.startPlaceHolderChild(listViewId, position, convertView, false);
     }
 
     /**

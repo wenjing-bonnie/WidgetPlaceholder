@@ -17,6 +17,9 @@ import com.android.base.SubActivity;
 import com.android.widgetplaceholder.R;
 import com.android.placeholder.holder.PlaceHolder;
 
+/**
+ * @author wenjing.liu
+ */
 public class PlaceHolderActivity extends SubActivity {
     PlaceHolder placeHolder;
     private TextView tvResetBg;

@@ -10,11 +10,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 
 import com.android.placeholder.utils.Log;
 import com.android.placeholder.view.PlaceHolderAnimationDrawable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,13 +33,23 @@ import java.util.Map;
 public class PlaceHolderImpl {
     private static final String DEFAULT_BACKGROUND = "#dddddd";
     private Activity activity;
+    /**
+     * View:需要预占位的View
+     * PlaceHolderBuffer:存储View的信息
+     */
     private Map<View, PlaceHolderBuffer> childBgParams;
+    /**
+     * Integer:ListView的item的position
+     * List<PlaceHolderBuffer>:该item下的view的所有子view
+     */
+    private Map<Integer, List<PlaceHolderBuffer>> listChildBgParams;
     private PlaceHolderParameter param;
 
     protected PlaceHolderImpl(Activity activity, PlaceHolderParameter param) {
         this.activity = activity;
         this.param = param;
         childBgParams = new HashMap<>();
+        listChildBgParams = new HashMap<>();
     }
 
     /**
@@ -47,7 +61,7 @@ public class PlaceHolderImpl {
     }
 
     /**
-     * 开始循环遍历给定的ViewGroup上的子View,应用于ListView等
+     * 开始循环遍历给定的ViewGroup上的子View
      *
      * @param viewGroup
      */
@@ -70,6 +84,62 @@ public class PlaceHolderImpl {
             }
         } else {
             placeHolderView(viewGroup);
+        }
+    }
+
+    /**
+     * 开始循环遍历ListView的item上的子View,应用于ListView
+     *
+     * @param listViewId  该ListView的id,用来判断该ListView是否限制使用该预占位功能
+     * @param position    每个item的position
+     * @param convertView 每个item的view
+     * @param isRecursion 是否为递归调用，只有递归调用才从listChildBgParams.containsKey中判断key
+     */
+    protected void startPlaceHolderChild(@IdRes int listViewId, int position, View convertView, boolean isRecursion) {
+        if (this.param.isDisable
+                || isWithoutPlaceHolderView(listViewId)) {
+            return;
+        }
+        //主动调用的时候，要清空集合里面的内容
+        if (!isRecursion) {
+            listChildBgParams.clear();
+        }
+
+        List<PlaceHolderBuffer> listChildes = new ArrayList<>();
+        //只有递归调用的是，才需要判断已经含有该key,则取出来更新;否则直接新建,最后更新
+        if (isRecursion && listChildBgParams.containsKey(position)) {
+            listChildes = listChildBgParams.get(position);
+        }
+        if (convertView instanceof ViewGroup) {
+            int count = ((ViewGroup) convertView).getChildCount();
+            for (int i = 0; i < count; i++) {
+                View child = ((ViewGroup) convertView).getChildAt(i);
+                if (child instanceof ViewGroup) {
+                    startPlaceHolderChild(listViewId, position, child, true);
+                } else {
+                    PlaceHolderBuffer buffer = placeHolderView(child);
+                    if (buffer == null) {
+                        continue;
+                    }
+                    listChildes.add(buffer);
+                }
+            }
+        } else {
+            PlaceHolderBuffer buffer = placeHolderView(convertView);
+            if (buffer == null) {
+                return;
+            }
+            listChildes.add(buffer);
+        }
+
+        listChildBgParams.put(position, listChildes);
+        printListChildBgParams();
+    }
+
+    private void printListChildBgParams() {
+        for (Integer position : listChildBgParams.keySet()) {
+            List<PlaceHolderBuffer> params = listChildBgParams.get(position);
+            Log.v(String.format("position = %d , size = %d", position, params.size()));
         }
     }
 
@@ -120,19 +190,21 @@ public class PlaceHolderImpl {
      *
      * @param child
      */
-    private void placeHolderView(View child) {
+    private PlaceHolderBuffer placeHolderView(View child) {
+        PlaceHolderBuffer buffer = null;
         Log.d("id = " + child.getId() + " , child = " + child);
         //有设置不需要预加载UI的View
         if (isWithoutPlaceHolderView(child)
                 || isWithoutPlaceHolderView(child.getId())) {
-            return;
+            return null;
         }
         if (child instanceof TextView) {
             //Button extends TextView
-            placeHolderTextViewIncludeButton((TextView) child);
+            buffer = placeHolderTextViewIncludeButton((TextView) child);
         } else if (child instanceof ImageView) {
-            placeHolderImageView((ImageView) child);
+            buffer = placeHolderImageView((ImageView) child);
         }
+        return buffer;
     }
 
     /**
@@ -140,7 +212,7 @@ public class PlaceHolderImpl {
      *
      * @param child
      */
-    private void placeHolderTextViewIncludeButton(TextView child) {
+    private PlaceHolderBuffer placeHolderTextViewIncludeButton(TextView child) {
         //保存之前的信息
         PlaceHolderBuffer buffer = new PlaceHolderBuffer();
         buffer.bgDrawable = child.getBackground();
@@ -149,6 +221,7 @@ public class PlaceHolderImpl {
         //重新设置
         setChildBackground(child);
         child.setTextColor(Color.TRANSPARENT);
+        return buffer;
     }
 
     /**
@@ -156,7 +229,7 @@ public class PlaceHolderImpl {
      *
      * @param child
      */
-    private void placeHolderImageView(ImageView child) {
+    private PlaceHolderBuffer placeHolderImageView(ImageView child) {
         //保存之前的信息
         PlaceHolderBuffer buffer = new PlaceHolderBuffer();
         buffer.bgDrawable = child.getBackground();
@@ -166,6 +239,7 @@ public class PlaceHolderImpl {
         //child.setLayoutParams(params);
         setChildBackground(child);
         child.setImageDrawable(null);
+        return buffer;
     }
 
 
