@@ -9,14 +9,13 @@ import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.android.base.SubActivity;
-import com.android.widgetplaceholder.R;
 import com.android.placeholder.holder.PlaceHolder;
+import com.android.widgetplaceholder.R;
 
 /**
  * @author wenjing.liu

@@ -1,6 +1,7 @@
 package com.android.placeholder;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;

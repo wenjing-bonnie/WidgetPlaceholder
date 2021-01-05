@@ -108,6 +108,7 @@ public class PlaceHolderImpl {
         }
         Log.v("The position  " + position + "  is beginning");
         for (View child : viewHolder) {
+            Log.d("child = " + child);
             startPlaceHolderListViewChild(position, child);
         }
         printListChildBgParams();
@@ -236,6 +237,7 @@ public class PlaceHolderImpl {
         childBgParams.put(child, buffer);
         //重新设置
         setChildBackground(child);
+        Log.d("child placeHolderTextViewIncludeButton = " + child);
         child.setTextColor(Color.TRANSPARENT);
         return buffer;
     }

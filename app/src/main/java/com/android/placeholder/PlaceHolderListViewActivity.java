@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 问题1：
  * 如果ListView上面有静态数据，那么在从服务器中获取数据之前，这段时间并不知道ListView上面有几个item，ListView并不会渲染到界面上
- * 所以对于ListView的意义在哪？
+ * 所以对于ListView的意义在哪？？？？TODO
  * 针对这种现象，是不是ListView控件就直接用和TextView那种一样，同样方式就可以了呢？
  * <p>
  * 第一个版本先不考虑这种是实际情况，先按照有数据了
@@ -38,6 +38,7 @@ public class PlaceHolderListViewActivity extends SubActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
+            Log.e("position = handleMessage ");
             placeHolder.stopPlaceHolderChild();
             //adapter.notifyDataSetChanged();
         }
