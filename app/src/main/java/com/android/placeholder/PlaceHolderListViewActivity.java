@@ -23,18 +23,23 @@ import java.util.List;
  * 针对这种现象，是不是ListView控件就直接用和TextView那种一样，同样方式就可以了呢？
  * <p>
  * 第一个版本先不考虑这种是实际情况，先按照有数据了
+ * <p>
+ * 其实ListView在加载预占位UI的时候，我只需要修改该item的背景就可以了，所以仍在Activity中调用.
+ * 然后怎么修改Adapter的内容呢????
  *
  * @author wenjing.liu
  */
 public class PlaceHolderListViewActivity extends SubActivity {
     private ListView lvTestPlaceHolder;
     private PlaceHolder placeHolder;
+    PlaceHolderListViewAdapter adapter;
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             placeHolder.stopPlaceHolderChild();
+            //adapter.notifyDataSetChanged();
         }
     };
 
@@ -50,7 +55,7 @@ public class PlaceHolderListViewActivity extends SubActivity {
         for (int i = 0; i < 10; i++) {
             source.add(String.format("第%d行：永定河永定河", i));
         }
-        PlaceHolderListViewAdapter adapter = new PlaceHolderListViewAdapter(PlaceHolderListViewActivity.this, source, placeHolder);
+        adapter = new PlaceHolderListViewAdapter(PlaceHolderListViewActivity.this, source, placeHolder);
         lvTestPlaceHolder.setAdapter(adapter);
 
         Message msg = new Message();

@@ -83,10 +83,19 @@ public class PlaceHolder {
     /**
      * @param listViewId  该ListView的id,用来判断该ListView是否限制使用该预占位功能
      * @param position    每个item的position
-     * @param convertView 每个item的view
+     * @param viewHolder 每个item的view
      */
-    public void startPlaceHolderChild(@IdRes int listViewId, int position, View convertView) {
-        impl.startPlaceHolderChild(listViewId, position, convertView, false);
+//    public void startPlaceHolderChild(@IdRes int listViewId, int position, Object viewHolder) {
+//        impl.startPlaceHolderChild(listViewId, position, viewHolder);
+//    }
+
+    /**
+     * @param listViewId 该ListView的id,用来判断该ListView是否限制使用该预占位功能
+     * @param position   每个item的position
+     * @param viewHolder 每个item的view
+     */
+    public void startPlaceHolderChild(@IdRes int listViewId, int position, View... viewHolder) {
+        impl.startPlaceHolderChild(listViewId, position, viewHolder);
     }
 
     /**

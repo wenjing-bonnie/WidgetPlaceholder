@@ -16,6 +16,7 @@ import androidx.annotation.LayoutRes;
 import com.android.placeholder.utils.Log;
 import com.android.placeholder.view.PlaceHolderAnimationDrawable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,32 +91,45 @@ public class PlaceHolderImpl {
     /**
      * 开始循环遍历ListView的item上的子View,应用于ListView
      *
-     * @param listViewId  该ListView的id,用来判断该ListView是否限制使用该预占位功能
-     * @param position    每个item的position
-     * @param convertView 每个item的view
-     * @param isRecursion 是否为递归调用，只有递归调用才从listChildBgParams.containsKey中判断key
+     * @param listViewId 该ListView的id,用来判断该ListView是否限制使用该预占位功能
+     * @param position   每个item的position
+     * @param viewHolder 每个item的view
      */
-    protected void startPlaceHolderChild(@IdRes int listViewId, int position, View convertView, boolean isRecursion) {
+    protected void startPlaceHolderChild(@IdRes int listViewId, int position, View... viewHolder) {
         if (this.param.isDisable
                 || isWithoutPlaceHolderView(listViewId)) {
             return;
         }
-        //主动调用的时候，要清空集合里面的内容，防止ListView多次调用getView方法
-        if (!isRecursion && listChildBgParams.containsKey(position)) {
-            listChildBgParams.get(position).clear();
+        //每个position只插入一次，防止ListView多次调用getView方法
+        if (listChildBgParams.containsKey(position)) {
+            return;
         }
+        Log.v("The position  " + position + "  is beginning");
+        for (View child : viewHolder) {
+            startPlaceHolderListViewChild(position, child);
+        }
+        printListChildBgParams();
+        Log.d("The position  " + position + "  is finished");
+    }
 
+    /**
+     * 循环遍历里面所有的子View
+     *
+     * @param position
+     * @param childView
+     */
+    private void startPlaceHolderListViewChild(int position, View childView) {
         List<PlaceHolderBuffer> listChildes = new ArrayList<>();
         //只有递归调用的是，才需要判断已经含有该key,则取出来更新;否则直接新建,最后更新
-        if (isRecursion && listChildBgParams.containsKey(position)) {
+        if (listChildBgParams.containsKey(position)) {
             listChildes = listChildBgParams.get(position);
         }
-        if (convertView instanceof ViewGroup) {
-            int count = ((ViewGroup) convertView).getChildCount();
+        if (childView instanceof ViewGroup) {
+            int count = ((ViewGroup) childView).getChildCount();
             for (int i = 0; i < count; i++) {
-                View child = ((ViewGroup) convertView).getChildAt(i);
+                View child = ((ViewGroup) childView).getChildAt(i);
                 if (child instanceof ViewGroup) {
-                    startPlaceHolderChild(listViewId, position, child, true);
+                    startPlaceHolderListViewChild(position, child);
                 } else {
                     PlaceHolderBuffer buffer = placeHolderView(child);
                     if (buffer == null) {
@@ -125,14 +139,18 @@ public class PlaceHolderImpl {
                 }
             }
         } else {
-            PlaceHolderBuffer buffer = placeHolderView(convertView);
-            if (buffer == null) {
-                return;
+            PlaceHolderBuffer buffer = placeHolderView(childView);
+            if (buffer != null) {
+                listChildes.add(buffer);
             }
-            listChildes.add(buffer);
         }
-
         listChildBgParams.put(position, listChildes);
+    }
+
+    private void printListChildBgParams() {
+        for (Integer key : listChildBgParams.keySet()) {
+            Log.w("position = " + key + " , size = " + listChildBgParams.get(key).size());
+        }
     }
 
     /**
@@ -332,6 +350,7 @@ public class PlaceHolderImpl {
             return;
         }
         for (Integer key : listChildBgParams.keySet()) {
+            Log.v("The restore position = " + key);
             List<PlaceHolderBuffer> buffers = listChildBgParams.get(key);
             for (PlaceHolderBuffer buffer : buffers) {
                 restorePlaceHolderView(buffer.childView, buffer);

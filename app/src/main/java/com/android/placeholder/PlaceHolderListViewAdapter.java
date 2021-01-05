@@ -28,6 +28,7 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
     private List<String> dataSources;
     private LayoutInflater inflater;
     private PlaceHolder placeHolder;
+    private boolean isCalled = false;
 
     public PlaceHolderListViewAdapter(Context context, List<String> sources, PlaceHolder holder) {
         this.context = context;
@@ -52,6 +53,14 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * 其实ListView在加载预占位UI的时候，我只需要修改该item的背景就可以了，所以仍在外面
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ItemViewHolder holder;
@@ -65,6 +74,7 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
         } else {
             holder = (ItemViewHolder) convertView.getTag();
         }
+
         holder.tvTitle.setText(dataSources.get(position));
         String message;
         if (position % 2 == 0) {
@@ -73,9 +83,12 @@ public class PlaceHolderListViewAdapter extends BaseAdapter {
             message = String.format("第%d行：救荒本草是哪个朝代朱棣编纂的一部专著", position);
         }
         holder.tvMessage.setText(message);
-        placeHolder.startPlaceHolderChild(R.id.lv_test_place_holder, position, convertView);
+
+        placeHolder.startPlaceHolderChild(R.id.lv_test_place_holder, position,
+                holder.tvTitle, holder.tvMessage, holder.ivImage);
         return convertView;
     }
+
 
     private class ItemViewHolder {
         ImageView ivImage;
