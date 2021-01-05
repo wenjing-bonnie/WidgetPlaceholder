@@ -66,7 +66,7 @@ public class PlaceHolderActivity extends SubActivity {
                 //.withoutPlaceHolder(R.id.tv_test_code,R.id.ll_code_layout)
                 //.setPlaceHolderDisable(true)
                // .setPlaceHolderAnimationMode(PlaceHolder.ANIMATION_SWING)
-                .setPlaceHolderBackgroundColor(Color.GRAY, Color.LTGRAY, Color.GRAY)
+               // .setPlaceHolderBackgroundColor(Color.GRAY, Color.LTGRAY, Color.GRAY)
                 .build();
         placeHolder.startPlaceHolderChild();
         stopPlaceHolder();
