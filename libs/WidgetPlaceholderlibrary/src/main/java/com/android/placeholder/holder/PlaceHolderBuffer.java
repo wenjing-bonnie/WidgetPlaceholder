@@ -2,6 +2,7 @@ package com.android.placeholder.holder;
 
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 /**
  * Created by wenjing.liu on 2020/12/7 in J1.
@@ -25,5 +26,10 @@ public class PlaceHolderBuffer {
      */
 
     protected Drawable srcDrawable;
+
+    /**
+     * 要设置预占位的控件
+     */
+    protected View childView;
 
 }

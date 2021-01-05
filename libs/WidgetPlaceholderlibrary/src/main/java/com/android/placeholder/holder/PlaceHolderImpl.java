@@ -100,9 +100,9 @@ public class PlaceHolderImpl {
                 || isWithoutPlaceHolderView(listViewId)) {
             return;
         }
-        //主动调用的时候，要清空集合里面的内容
-        if (!isRecursion) {
-            listChildBgParams.clear();
+        //主动调用的时候，要清空集合里面的内容，防止ListView多次调用getView方法
+        if (!isRecursion && listChildBgParams.containsKey(position)) {
+            listChildBgParams.get(position).clear();
         }
 
         List<PlaceHolderBuffer> listChildes = new ArrayList<>();
@@ -133,14 +133,6 @@ public class PlaceHolderImpl {
         }
 
         listChildBgParams.put(position, listChildes);
-        printListChildBgParams();
-    }
-
-    private void printListChildBgParams() {
-        for (Integer position : listChildBgParams.keySet()) {
-            List<PlaceHolderBuffer> params = listChildBgParams.get(position);
-            Log.v(String.format("position = %d , size = %d", position, params.size()));
-        }
     }
 
     /**
@@ -217,6 +209,7 @@ public class PlaceHolderImpl {
         PlaceHolderBuffer buffer = new PlaceHolderBuffer();
         buffer.bgDrawable = child.getBackground();
         buffer.textColor = child.getTextColors();
+        buffer.childView = child;
         childBgParams.put(child, buffer);
         //重新设置
         setChildBackground(child);
@@ -234,6 +227,7 @@ public class PlaceHolderImpl {
         PlaceHolderBuffer buffer = new PlaceHolderBuffer();
         buffer.bgDrawable = child.getBackground();
         buffer.srcDrawable = child.getDrawable();
+        buffer.childView = child;
         childBgParams.put(child, buffer);
         //TODO 如果ImageView去掉src之后，而ImageView设置的wrap_content的区域怎么办
         //child.setLayoutParams(params);
@@ -271,8 +265,11 @@ public class PlaceHolderImpl {
         }
         //设置的背景样式或者默认的样式
         Drawable bg = param.settingBackgroundDrawable;
-        child.setAlpha(0.5f);
-        child.setBackground(bg == null ? new ColorDrawable(getTextViewDefaultBackground(child)) : bg);
+        if (bg == null) {
+            bg = new ColorDrawable(getTextViewDefaultBackground(child));
+        }
+        bg.setAlpha(100);
+        child.setBackground(bg);
     }
 
 
@@ -309,10 +306,11 @@ public class PlaceHolderImpl {
      */
     protected void stopPlaceHolderView() {
         restorePlaceHolderView();
+        restoreListViewPlaceHolderView();
     }
 
     /**
-     * 还原之前保存的内容
+     * 循环遍历还原之前保存的所有View的UI
      */
     private void restorePlaceHolderView() {
         if (childBgParams == null || childBgParams.isEmpty()) {
@@ -320,15 +318,42 @@ public class PlaceHolderImpl {
         }
         Log.d("Restore place holder view count is " + childBgParams.size());
         for (View child : childBgParams.keySet()) {
-            Log.d("This child is " + child.getClass().getSimpleName());
-            if (child instanceof TextView) {
-                restorePlaceHolderTextViewIncludeButton((TextView) child, childBgParams.get(child));
-            } else if (child instanceof ImageView) {
-                restorePlaceHolderImageView((ImageView) child, childBgParams.get(child));
-            }
+            restorePlaceHolderView(child, childBgParams.get(child));
         }
 
         childBgParams.clear();
+    }
+
+    /**
+     * 循环遍历还原之前保存的所有View的UI
+     */
+    private void restoreListViewPlaceHolderView() {
+        if (listChildBgParams == null || listChildBgParams.isEmpty()) {
+            return;
+        }
+        for (Integer key : listChildBgParams.keySet()) {
+            List<PlaceHolderBuffer> buffers = listChildBgParams.get(key);
+            for (PlaceHolderBuffer buffer : buffers) {
+                restorePlaceHolderView(buffer.childView, buffer);
+            }
+            listChildBgParams.get(key).clear();
+        }
+        listChildBgParams.clear();
+    }
+
+    /**
+     * 还原单个View的UI
+     *
+     * @param child
+     * @param buffer
+     */
+    private void restorePlaceHolderView(View child, PlaceHolderBuffer buffer) {
+        Log.d("This child is " + child.getClass().getSimpleName());
+        if (child instanceof TextView) {
+            restorePlaceHolderTextViewIncludeButton((TextView) child, buffer);
+        } else if (child instanceof ImageView) {
+            restorePlaceHolderImageView((ImageView) child, buffer);
+        }
     }
 
     /**
