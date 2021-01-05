@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -209,7 +211,7 @@ public class PlaceHolderImpl {
             return null;
         }
         if (child instanceof TextView) {
-            //Button extends TextView
+            //Button extends TextView EditText extends TextView RadioButton extends CompoundButton
             buffer = placeHolderTextViewIncludeButton((TextView) child);
         } else if (child instanceof ImageView) {
             buffer = placeHolderImageView((ImageView) child);
@@ -228,6 +230,9 @@ public class PlaceHolderImpl {
         buffer.bgDrawable = child.getBackground();
         buffer.textColor = child.getTextColors();
         buffer.childView = child;
+        if (child instanceof CompoundButton && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            buffer.buttonDrawable = ((CompoundButton) child).getButtonDrawable();
+        }
         childBgParams.put(child, buffer);
         //重新设置
         setChildBackground(child);
@@ -279,6 +284,7 @@ public class PlaceHolderImpl {
             animationDrawable.setBackgroundAnimationColor(param.settingBackgroundColors);
             animationDrawable.setRemoveOnAttachStateChangeListener(child);
             child.setBackground(animationDrawable);
+            setChildBackground(child, animationDrawable);
             return;
         }
         //设置的背景样式或者默认的样式
@@ -286,8 +292,16 @@ public class PlaceHolderImpl {
         if (bg == null) {
             bg = new ColorDrawable(getTextViewDefaultBackground(child));
         }
-        bg.setAlpha(100);
-        child.setBackground(bg);
+        bg.setAlpha(50);
+        setChildBackground(child, bg);
+    }
+
+    private void setChildBackground(View child, Drawable bgDrawable) {
+        if (child instanceof CompoundButton && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //TODO 为什么没有设置到背景里面
+            ((CompoundButton) child).setButtonDrawable(bgDrawable);
+        }
+        child.setBackground(bgDrawable);
     }
 
 
@@ -385,7 +399,9 @@ public class PlaceHolderImpl {
         stopPlaceHolderAnimation(child);
         child.setTextColor(buffer.textColor);
         child.setBackground(buffer.bgDrawable);
-
+        if (child instanceof CompoundButton && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ((CompoundButton) child).setButtonDrawable(buffer.buttonDrawable);
+        }
     }
 
     /**

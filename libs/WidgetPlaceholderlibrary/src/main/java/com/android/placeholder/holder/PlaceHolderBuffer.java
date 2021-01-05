@@ -31,5 +31,9 @@ public class PlaceHolderBuffer {
      * 要设置预占位的控件
      */
     protected View childView;
+    /**
+     * 针对CompoundButton，例如RadioButton的button
+     */
+    protected Drawable buttonDrawable;
 
 }
